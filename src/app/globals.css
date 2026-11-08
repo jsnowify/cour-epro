@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 @theme inline {
-  --breakpoint-md: 900px;
+  --breakpoint-md: 1100px;
   --color-brand: #b01020;
   --color-ink: #0e0e10;
   --color-paper: #e9e9eb;
@@ -36,6 +36,113 @@ body {
   background: #000;
   color: #fff;
   font-family: var(--font-code);
+}
+
+/* Code editor lines. The newest line carries data-cur: highlighted, types itself in, shows the blinking cursor. */
+.code-line {
+  display: flex;
+  white-space: pre;
+}
+.code-line[data-cur] {
+  background: rgb(255 255 255 / 0.07);
+}
+.code-line .code-no {
+  color: rgb(255 255 255 / 0.25);
+}
+.code-line[data-cur] .code-no {
+  color: rgb(255 255 255 / 0.7);
+}
+.code-line .code-cur {
+  display: none;
+  margin-left: 1px;
+  animation: code-blink 1s steps(1, end) infinite;
+}
+.code-line[data-cur] .code-cur {
+  display: inline-block;
+}
+.code-line[data-cur] .code-text {
+  animation: code-type 0.5s steps(22, end) both;
+}
+@keyframes code-type {
+  from { clip-path: inset(0 100% 0 0); }
+  to { clip-path: inset(0 0 0 0); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .code-line[data-cur] .code-text { animation: none; }
+}
+
+.code-rail__cursor {
+  animation: code-blink 1s steps(1, end) infinite;
+}
+@keyframes code-blink {
+  50% { opacity: 0; }
+}
+
+/* Visitor map: a soft square pulse, transform + opacity only (compositor), paused while off screen or the tab is hidden */
+.map-pulse {
+  animation: map-pulse 2.4s ease-out infinite;
+  will-change: transform, opacity;
+}
+[data-live="false"] .map-pulse {
+  animation-play-state: paused;
+}
+@keyframes map-pulse {
+  from { transform: scale(1); opacity: 0.55; }
+  to { transform: scale(2.6); opacity: 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .map-pulse { animation: none; opacity: 0; }
+}
+
+/* Visitor map: a row flashes crimson when its count just went up */
+.map-bump {
+  animation: map-bump 1.3s ease-out;
+}
+@keyframes map-bump {
+  from { background-color: rgb(200 16 46 / 0.75); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .map-bump { animation: none; }
+}
+
+/* Season clock digits roll in from above when they change */
+.roll-in {
+  animation: roll-in 0.35s ease-out;
+}
+@keyframes roll-in {
+  from { transform: translateY(-55%); opacity: 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roll-in { animation: none; }
+}
+
+/* Custom cursor: real CSS cursor images, so the OS draws them (no JS, no lag, no change to scrolling or animation).
+   Crimson arrow by default, a bracket frame with a square over links and buttons (it closes in while pressed).
+   Mouse / trackpad only; Windows high-contrast mode and touch keep the system cursors; fields keep the text cursor. */
+@media (pointer: fine) and (not (forced-colors: active)) {
+  html {
+    cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32'%3E%3Cpath d='M4 3V26L10 20.6L14.6 29.4L19 27.2L14.4 18.4H22.6Z' fill='none' stroke='%23000' stroke-width='4.5' stroke-linejoin='round'/%3E%3Cpath d='M4 3V26L10 20.6L14.6 29.4L19 27.2L14.4 18.4H22.6Z' fill='%23c8102e' stroke='%23fff' stroke-width='2' stroke-linejoin='round'/%3E%3C/svg%3E") 4 3, auto;
+  }
+  a,
+  button,
+  summary,
+  label,
+  select,
+  [role="button"],
+  [data-cursor] {
+    cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='36' height='36' viewBox='0 0 36 36'%3E%3Cpath d='M7 14V7H14M22 7H29V14M29 22V29H22M14 29H7V22' fill='none' stroke='%23000' stroke-width='5' stroke-linecap='square'/%3E%3Cpath d='M7 14V7H14M22 7H29V14M29 22V29H22M14 29H7V22' fill='none' stroke='%23fff' stroke-width='2.5' stroke-linecap='square'/%3E%3Crect x='14' y='14' width='8' height='8' fill='%23c8102e' stroke='%23fff' stroke-width='1.5'/%3E%3C/svg%3E") 18 18, pointer;
+  }
+  a:active,
+  button:active,
+  summary:active,
+  [role="button"]:active {
+    cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='36' height='36' viewBox='0 0 36 36'%3E%3Cpath d='M9 14V9H14M22 9H27V14M27 22V27H22M14 27H9V22' fill='none' stroke='%23000' stroke-width='5' stroke-linecap='square'/%3E%3Cpath d='M9 14V9H14M22 9H27V14M27 22V27H22M14 27H9V22' fill='none' stroke='%23fff' stroke-width='2.5' stroke-linecap='square'/%3E%3Crect x='14' y='14' width='8' height='8' fill='%23c8102e' stroke='%23fff' stroke-width='1.5'/%3E%3C/svg%3E") 18 18, pointer;
+  }
+  input,
+  textarea,
+  [contenteditable="true"] {
+    cursor: text;
+  }
 }
 
 /* Lenis */

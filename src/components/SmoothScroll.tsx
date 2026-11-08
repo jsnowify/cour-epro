@@ -2,19 +2,12 @@
 
 import { useEffect } from "react";
 import Lenis from "lenis";
-import gsap from "gsap";
 
-/** Lenis smooth scroll, driven by the GSAP ticker. No tweens are defined. */
+/** Lenis smooth scroll on its own animation frame loop (it pauses by itself when the tab is hidden). */
 export default function SmoothScroll() {
   useEffect(() => {
-    const lenis = new Lenis({ autoRaf: false });
-    const tick = (time: number) => lenis.raf(time * 1000);
-    gsap.ticker.add(tick);
-    gsap.ticker.lagSmoothing(0);
-    return () => {
-      gsap.ticker.remove(tick);
-      lenis.destroy();
-    };
+    const lenis = new Lenis({ autoRaf: true });
+    return () => lenis.destroy();
   }, []);
   return null;
 }

@@ -1,30 +1,43 @@
 "use client";
 
 import { createContext, useContext } from "react";
-import type { CSSProperties, ReactNode } from "react";
+import type { CSSProperties, ReactNode, Ref } from "react";
 import { HAIRLINE_XS } from "@/lib/design";
 
 /**
- * Layout primitives. On desktop (>= 900px) everything is placed at the exact
+ * Layout primitives. On desktop (>= 1100px) everything is placed at the exact
  * 1440px-design coordinates from Figma (y values are page-absolute and are
- * made band-relative here). Below 900px the same elements fall back to normal
+ * made band-relative here). Below 1100px the same elements fall back to normal
  * flow, stacked vertically in DOM order, and huge type scales down.
  */
 
 const BandTop = createContext(0);
+
+/** Wrapper class for a label/value pair: invisible on desktop (absolute children), a divided label | value row on mobile. */
+export const ROW = "contents max-md:flex max-md:items-baseline max-md:justify-between max-md:gap-4 max-md:border-b max-md:border-current/10 max-md:py-2.5";
+
+/** Wrapper class for a repeated entry (bulletin item, phase, step): invisible on desktop, a ruled group on mobile. */
+export const GROUP = "contents max-md:mt-2 max-md:flex max-md:flex-col max-md:gap-1.5 max-md:border-t max-md:border-current/15 max-md:pt-4";
+
+/** Wrapper class for a table row (many cells): invisible on desktop, a two-column ruled card row on mobile. */
+export const TROW = "contents max-md:grid max-md:grid-cols-2 max-md:gap-x-4 max-md:gap-y-1 max-md:border-b max-md:border-current/10 max-md:py-3";
 
 const css = (v: Record<string, string>) => v as CSSProperties;
 
 /** Mobile font size: scale large display type with the viewport, floor small. */
 function mobileFs(fs: number) {
   if (fs < 40) return `${fs}px`;
-  return `max(calc(${fs} * (100vw - 40px) / 1440), ${Math.min(fs, 24)}px)`;
+  return `max(calc(${fs} * (100vw - 40px) / 1440 * 1.5), ${Math.round(Math.min(fs * 0.5, 34))}px)`;
 }
 
 type BandProps = {
   top: number;
   h: number;
   className?: string;
+  /** tablet (640-1099px): lay the band's cards out in this many columns instead of one stack */
+  tab?: 2 | 3;
+  /** phones (<640px): lay the band's cards out in 2 columns instead of one stack */
+  ph?: 2;
   /** hairline colour class, e.g. "bg-white/10" */
   rules?: string;
   /** desktop-only backdrop drawn beneath the hairlines */
@@ -32,11 +45,16 @@ type BandProps = {
   children: ReactNode;
 };
 
-export function Band({ top, h, className = "", rules, under, children }: BandProps) {
+const TAB = {
+  2: "max-md:min-[640px]:grid max-md:min-[640px]:grid-cols-2 max-md:min-[640px]:[&>:last-child:nth-child(odd)]:col-span-full",
+  3: "max-md:min-[640px]:grid max-md:min-[640px]:grid-cols-3",
+} as const;
+
+export function Band({ top, h, className = "", tab, ph, rules, under, children }: BandProps) {
   return (
     <BandTop.Provider value={top}>
       <section
-        className={`relative w-full md:h-[var(--h)] max-md:flex max-md:flex-col max-md:gap-3 max-md:px-5 max-md:py-8 ${className}`}
+        className={`relative w-full md:h-[var(--h)] max-md:flex max-md:flex-col max-md:gap-3 max-md:px-5 max-md:py-8 ${tab ? TAB[tab] : ""} ${ph ? "max-md:grid max-md:grid-cols-2" : ""} ${className}`}
         style={css({ "--h": `${h}px` })}
       >
         {under}
@@ -106,16 +124,19 @@ export function Box({
   w,
   h,
   className = "",
+  ref,
 }: {
   x: number;
   y: number;
   w: number;
   h: number;
   className?: string;
+  ref?: Ref<HTMLDivElement>;
 }) {
   const top = useContext(BandTop);
   return (
     <div
+      ref={ref}
       aria-hidden
       className={`max-md:hidden md:absolute md:left-[var(--x)] md:top-[var(--y)] md:h-[var(--h)] md:w-[var(--w)] ${className}`}
       style={css({ "--x": `${x}px`, "--y": `${y - top}px`, "--w": `${w}px`, "--h": `${h}px` })}

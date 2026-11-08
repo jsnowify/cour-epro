@@ -7,8 +7,8 @@ export const FIELD_W = 1079;
 export const NAV = [
   { key: "home", label: "HOME", href: "/", x: 180, w: 180 },
   { key: "teams", label: "TEAMS", href: "/teams", x: 361, w: 179 },
-  { key: "tournaments", label: "TOURNAMENTS", href: "/tournaments", x: 541, w: 179 },
-  { key: "players", label: "PLAYERS", href: "/players", x: 722, w: 178 },
+  { key: "players", label: "PLAYERS", href: "/players", x: 541, w: 179 },
+  { key: "tournaments", label: "TOURNAMENTS", href: "/tournaments", x: 722, w: 178 },
   { key: "news", label: "NEWS", href: "/news", x: 903, w: 178 },
   { key: "about", label: "ABOUT", href: "/about", x: 1083, w: 178 },
 ] as const;

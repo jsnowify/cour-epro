@@ -7,8 +7,8 @@ export const HAIRLINE_XS = [40, 269, 497, 725, 954, 1182, 1400] as const;
 export const NAV = [
   { key: "home", label: "HOME", href: "/" },
   { key: "teams", label: "TEAMS", href: "/teams" },
-  { key: "tournaments", label: "TOURNAMENTS", href: "/tournaments" },
   { key: "players", label: "PLAYERS", href: "/players" },
+  { key: "tournaments", label: "TOURNAMENTS", href: "/tournaments" },
   { key: "news", label: "NEWS", href: "/news" },
   { key: "about", label: "ABOUT", href: "/about" },
 ] as const;
