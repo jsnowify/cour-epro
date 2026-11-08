@@ -98,15 +98,13 @@ export default function AboutPage() {
       {/* MOTTOS */}
       <Band top={1261} h={360} tab={2}>
         <Block x={181} y={1261} w={539} h={359} bg="bg-black text-white">
-          <A x={201} y={1285} className={`${label} text-crimson`}>MOTTO 01 · OUR DIRECTION</A>
-          <A x={201} y={1322} w={500} fs={54} className="font-display leading-[1.05]">BEYOND THE HORIZON.</A>
+          <A x={201} y={1290} w={500} fs={54} className="font-display leading-[1.05]">BEYOND THE HORIZON.</A>
           <A x={201} y={1520} w={440} className="text-[15px] leading-[1.6] text-white/70">
             We look past the next match. Every scrim, review and rank push is a step toward a bigger stage.
           </A>
         </Block>
         <Block x={721} y={1261} w={539} h={359} bg="bg-crimson text-white">
-          <A x={741} y={1285} className={`${label} text-white/80`}>MOTTO 02 · OUR CULTURE</A>
-          <A x={741} y={1322} w={500} fs={54} className="font-display leading-[1.05]">BEYOND OURSELVES.</A>
+          <A x={741} y={1290} w={500} fs={54} className="font-display leading-[1.05]">BEYOND OURSELVES.</A>
           <A x={741} y={1520} w={440} className="text-[15px] leading-[1.6] text-white/85">
             Teamwork comes before individual glory. We win, learn and improve together.
           </A>
