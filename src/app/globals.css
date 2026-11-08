@@ -156,9 +156,45 @@ body {
 .preloader[data-stage="3"] { --pl-bg: #ffffff; --pl-fg: #c8102e; }
 .preloader[data-stage="4"] { --pl-bg: #c8102e; --pl-fg: #ffffff; }
 .preloader[data-stage="5"] { --pl-bg: #0a0a0a; --pl-fg: #ffffff; }
-.preloader[data-leaving] {
+/* exit, step 1: the ink slides out (number left, COUR right, logo shrinks), each a little after the last */
+.preloader .pl-num,
+.preloader .pl-cour,
+.preloader .pl-logo {
+  transition: translate 0.75s cubic-bezier(0.65, 0, 0.35, 1), scale 0.75s cubic-bezier(0.65, 0, 0.35, 1), opacity 0.75s cubic-bezier(0.65, 0, 0.35, 1);
+}
+.preloader[data-leaving] .pl-num { translate: -4vw 0; opacity: 0; }
+.preloader[data-leaving] .pl-cour { translate: 4vw 0; opacity: 0; transition-delay: 0.07s; }
+.preloader[data-leaving] .pl-logo { scale: 0.6; opacity: 0; transition-delay: 0.14s; }
+/* exit, step 2: the curtain lifts with a long ease, a crimson edge rides along its bottom, the page fades in underneath */
+.preloader[data-leaving="lift"] {
   clip-path: inset(0 0 100% 0);
-  transition: clip-path 0.8s cubic-bezier(0.76, 0, 0.24, 1);
+  transition: clip-path 1.3s cubic-bezier(0.83, 0, 0.17, 1);
+}
+.pl-edge {
+  position: fixed;
+  inset: auto 0 0 0;
+  z-index: 101;
+  height: 6px;
+  background: #c8102e;
+  opacity: 0;
+  pointer-events: none;
+}
+.pl-edge[data-leaving="lift"] {
+  translate: 0 -100vh;
+  transition: translate 1.3s cubic-bezier(0.83, 0, 0.17, 1);
+  animation: pl-edge 1.3s linear both;
+}
+@keyframes pl-edge {
+  0%, 85% { opacity: 1; }
+  100% { opacity: 0; }
+}
+.pl-edge[hidden] { display: none; }
+html[data-revealing] #top {
+  animation: page-reveal 1.3s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+@keyframes page-reveal {
+  from { opacity: 0.35; }
+  to { opacity: 1; }
 }
 .preloader[hidden],
 html[data-preloaded] .preloader {
