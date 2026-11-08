@@ -302,7 +302,7 @@ export function Footer({ top }: { top: number }) {
       <A x={840} y={bar + 8} className="text-[11px] tracking-[0.44px] text-white/50">
         <a href={PORTFOLIO_URL} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 hover:text-white">
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/assets/snowi.svg" alt="" width={22} height={24} className="block h-[24px] w-[22px] object-cover object-top" />
+          <img src="/assets/snowi.webp" alt="" width={24} height={24} loading="lazy" decoding="async" className="block size-[24px] object-cover" />
           BUILT BY SNOWI
           <Arrow />
         </a>

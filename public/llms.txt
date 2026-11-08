@@ -6,7 +6,7 @@
 
 - Name: COUR E-PRO. Former name: Aeronova Esport.
 - Game: Mobile Legends: Bang Bang (MLBB). Server: PH only. Country: Philippines.
-- Founded: January 2026. Founder: Snowi (portfolio: https://snowi-cambronero.vercel.app/). Snowi also designed and built the website.
+- Founded: January 2026. Founder: Snowi (portfolio: https://snowi-cambronero.vercel.app/). Snowi is a creative web designer and developer who works in motion web design and human-computer interaction, and designed and built this website. Snowi also plays Mid Lane for COUR UNO.
 - Squads: COUR UNO (active, six players) and COUR DOS (forming, still finding players). The team has no coach.
 - Current tournament: none. There is no COUR E-PRO tournament at the moment; dates, format and registration are announced on Discord.
 - Contact and applications: the official Discord server, https://discord.gg/Et66QZf4vu. This is the only place to apply.

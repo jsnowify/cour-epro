@@ -5,7 +5,8 @@ import { FOOTER_H, Footer, Header, Page } from "@/components/cour";
 import { CtaBand, InfoCard, Intro, Rails, SectionHeader, Stats, kicker } from "@/components/sections";
 import Drift from "@/components/Drift";
 import { DISCORD_URL, PORTFOLIO_URL } from "@/lib/links";
-import { Btn } from "@/components/cour";
+import PixelImage from "@/components/PixelImage";
+import MagicLink from "@/components/MagicLink";
 import { PressKitLink } from "@/components/Reader";
 
 export const metadata = pageMeta("/about");
@@ -137,17 +138,15 @@ export default function AboutPage() {
       <div className={gap}>
       <Band top={1981} h={360}>
         <Block x={181} y={1981} w={1079} h={359} bg="bg-white">
-          <A x={201} y={2001} w={290} className="max-md:w-full">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src="/assets/snowi.svg" alt="Digital drawing of Snowi, the founder of COUR E-PRO" width={290} height={319} className="block h-auto w-full" />
+          <A x={201} y={2001} w={318} className="max-md:w-full">
+            <PixelImage alt="Snowi, founder of COUR E-PRO: a silver-haired elf character in a blue scarf" size={736} />
           </A>
-          <A x={531} y={2005} className={`${label} text-crimson`}><span id="founder">FOUNDER &amp; CREATOR</span></A>
-          <A as="h2" x={528} y={2030} fs={72} className="font-display leading-none">SNOWI</A>
-          <A x={531} y={2124} w={680} className="text-[15px] leading-[1.7]">
-            Snowi founded COUR E-PRO, formerly Aeronova Esport, in January 2026, and designed and built this website. Snowi also plays Mid Lane for COUR UNO.
+          <A x={559} y={2005} className={`${label} text-crimson`}><span id="founder">FOUNDER &amp; CREATOR</span></A>
+          <A as="h2" x={556} y={2028} fs={64} className="font-display leading-none">SNOWI</A>
+          <A x={559} y={2112} w={650} className="text-[14px] leading-[1.65]">
+            Snowi founded COUR E-PRO, formerly Aeronova Esport, in January 2026. They are a creative web designer and developer who works in motion web design and human-computer interaction, and they designed and built every detail of this site, from its motion to its smallest interaction. Snowi also plays Mid Lane for COUR UNO.
           </A>
-          <A x={531} y={2262}><Btn href={PORTFOLIO_URL} variant="red">VIEW SNOWI&apos;S PORTFOLIO</Btn></A>
-          <A x={880} y={2280} className="text-[12px] text-muted max-md:hidden">snowi-cambronero.vercel.app</A>
+          <A x={559} y={2259}><MagicLink href={PORTFOLIO_URL} label="Snowi's portfolio">VIEW SNOWI&apos;S PORTFOLIO</MagicLink></A>
         </Block>
       </Band>
       </div>

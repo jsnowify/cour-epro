@@ -200,6 +200,217 @@ html[data-revealing] #top {
   display: none;
 }
 
+/* Snowi's avatar: pixelated placeholder, hidden sharp image while the pixels sharpen, then the crisp image fades in */
+.pixel-img {
+  background-size: 100% 100%;
+  image-rendering: pixelated;
+}
+.pixel-img picture {
+  display: block;
+  height: 100%;
+}
+.pixel-img[data-js] picture {
+  opacity: 0;
+}
+.pixel-img[data-js][data-done] picture {
+  opacity: 1; /* no transition: a crossfade would let the pixelated placeholder show through for a moment */
+}
+.pixel-img canvas {
+  opacity: 1;
+}
+.pixel-img[data-done] canvas {
+  opacity: 0;
+}
+
+/* Portfolio button: the ordinary crimson button at rest; on hover (or focus) a field of blue flowers grows (Frieren).
+   Two hover looks, picked by data-v on .magic: "sci" (black sweep, light streak, brackets, a row of flowers) and "sky" (a morning sky and a whole field). */
+.magic-btn {
+  background: #c8102e;
+  color: #ffffff;
+  transition: color 0.5s ease, box-shadow 0.5s ease;
+}
+.magic-label {
+  z-index: 2;
+  text-shadow: none;
+  transition: text-shadow 0.5s ease;
+}
+
+/* ---- sci ---- */
+.magic-sweep {
+  background: #0a0a0a;
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 0.5s ease-out;
+}
+.magic[data-v="sci"]:hover .magic-sweep,
+.magic[data-v="sci"]:focus-within .magic-sweep {
+  transform: scaleX(1);
+  transform-origin: left;
+}
+.magic-streak {
+  translate: -150% 0;
+}
+.magic[data-v="sci"]:hover .magic-streak,
+.magic[data-v="sci"]:focus-within .magic-streak {
+  animation: magic-streak 2.4s ease-in-out infinite;
+}
+@keyframes magic-streak {
+  0% { translate: -150% 0; }
+  40%, 100% { translate: 450% 0; }
+}
+
+/* the spark at the left blooms in and the label slides right, into the place the arrow leaves */
+.magic-spark {
+  z-index: 2;
+  opacity: 0;
+  transform: scale(0.3) rotate(-90deg);
+  transition: opacity 0.35s ease, transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.magic[data-v="sci"]:hover .magic-spark,
+.magic[data-v="sci"]:focus-within .magic-spark {
+  opacity: 1;
+  transform: scale(1) rotate(0deg);
+  animation: magic-bloom 3.6s ease-in-out 0.5s infinite;
+}
+.magic[data-v="sci"]:hover .magic-label,
+.magic[data-v="sci"]:focus-within .magic-label {
+  transform: translateX(30px);
+}
+
+/* ---- the garden (second act of the sci look) ---- */
+.magic-garden {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  pointer-events: none;
+  /* it grows out of the spark at the left, like a widening circle */
+  clip-path: circle(0% at 28px 50%);
+  transition: clip-path 0.3s ease-in; /* folding back is quick */
+}
+.magic.is-garden .magic-garden {
+  clip-path: circle(170% at 28px 50%);
+  transition: clip-path 1s cubic-bezier(0.6, 0, 0.2, 1); /* growing is slow */
+}
+.magic-stem {
+  transform: scaleY(0);
+  transition: transform 0.2s ease-in;
+}
+.magic.is-garden .magic-stem {
+  transform: scaleY(1);
+  transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) var(--d, 0ms);
+  animation: magic-stem-sway 3.4s ease-in-out infinite;
+  animation-delay: calc(0.9s + var(--sway-delay, 0ms));
+}
+@keyframes magic-stem-sway {
+  0%, 100% { transform: scaleY(1) skewX(-2.5deg); }
+  50% { transform: scaleY(1) skewX(2.5deg); }
+}
+/* once the garden has grown, the label turns deep blue and the little CSS flowers step aside */
+.magic[data-v="sci"] .magic-label {
+  transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1), color 0.6s ease, text-shadow 0.6s ease;
+}
+.magic[data-v="sci"].is-garden .magic-label {
+  color: #1d3a78;
+  text-shadow: 0 0 7px #eaf3ff, 0 0 3px #eaf3ff, 0 0 1px #eaf3ff;
+}
+.magic[data-v="sci"].is-garden .magic-grow {
+  opacity: 0;
+  transition-delay: 0ms;
+}
+.magic[data-v="sci"].is-garden .magic-sweep {
+  opacity: 0;
+  transition: opacity 0.8s ease 0.3s;
+}
+
+/* ---- sky ---- */
+.magic-sky {
+  background: linear-gradient(180deg, #cfe2fd 0%, #86b4f3 100%);
+  opacity: 0;
+  transition: opacity 0.6s ease;
+}
+.magic[data-v="sky"]:hover .magic-btn,
+.magic[data-v="sky"]:focus-within .magic-btn {
+  color: #1d3a78;
+  box-shadow: 0 10px 34px -6px rgb(63 123 224 / 0.8);
+}
+.magic[data-v="sky"]:hover .magic-sky,
+.magic[data-v="sky"]:focus-within .magic-sky {
+  opacity: 1;
+}
+.magic[data-v="sky"]:hover .magic-label,
+.magic[data-v="sky"]:focus-within .magic-label {
+  text-shadow: 0 0 8px #e9f2ff, 0 0 3px #e9f2ff;
+}
+
+/* ---- the flowers (both looks): hidden below the ground at rest, spring up only on hover or focus ---- */
+.magic-grow {
+  z-index: 1;
+  transform: translateY(160%) scale(0.2) rotate(var(--rot, 0deg));
+  transform-origin: 50% 100%;
+  opacity: 0;
+  transition: transform 0.7s cubic-bezier(0.34, 1.56, 0.64, 1) var(--d, 0ms), opacity 0.35s ease-out var(--d, 0ms);
+}
+.magic:hover .magic-grow,
+.magic:focus-within .magic-grow {
+  transform: translateY(0) scale(1) rotate(var(--rot, 0deg));
+  opacity: 1;
+}
+.magic[data-v="sci"]:hover .magic-grow,
+.magic[data-v="sci"]:focus-within .magic-grow {
+  transform: translateY(30%) scale(1) rotate(var(--rot, 0deg)); /* the front row peeks up from the bottom edge */
+}
+.magic-sway {
+  transform-origin: 50% 100%;
+  animation: magic-sway 3.2s ease-in-out infinite;
+  animation-delay: var(--sway-delay, 0ms);
+}
+@keyframes magic-sway {
+  0%, 100% { transform: rotate(-8deg); }
+  50% { transform: rotate(8deg); }
+}
+/* the arrow slot: arrow at rest, a flower in bloom on hover */
+.magic-arrow,
+.magic-bloom {
+  transition: opacity 0.35s ease;
+}
+.magic-arrow {
+  z-index: 2;
+  opacity: 1;
+}
+.magic-bloom {
+  z-index: 2;
+  opacity: 0;
+  animation: magic-bloom 3.6s ease-in-out infinite;
+}
+.magic:hover .magic-arrow,
+.magic:focus-within .magic-arrow {
+  opacity: 0;
+}
+.magic:hover .magic-bloom,
+.magic:focus-within .magic-bloom {
+  opacity: 1;
+}
+@keyframes magic-bloom {
+  0%, 100% { transform: rotate(0deg) scale(0.9); }
+  50% { transform: rotate(36deg) scale(1.15); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .magic-sway, .magic-bloom, .magic-spark, .magic-streak, .magic-stem { animation: none !important; }
+  .magic-grow, .magic-sky, .magic-sweep, .magic-btn, .magic-label, .magic-arrow, .magic-corner, .magic-spark, .magic-garden, .magic-stem { transition: none; }
+}
+
+/* The magic button has its own cursor: a blue flower (it closes a little while pressed). Mouse / trackpad only. */
+@media (pointer: fine) and (not (forced-colors: active)) {
+  .magic-btn {
+    cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32'%3E%3Cg transform='translate(16 16) scale(1) translate(-16 -16)'%3E%3Cg fill='%231d3a78' stroke='%231d3a78' stroke-width='3.6' stroke-linejoin='round'%3E%3Cellipse cx='16' cy='9.4' rx='4.5' ry='6.5' transform='rotate(0 16 16)'/%3E%3Cellipse cx='16' cy='9.4' rx='4.5' ry='6.5' transform='rotate(72 16 16)'/%3E%3Cellipse cx='16' cy='9.4' rx='4.5' ry='6.5' transform='rotate(144 16 16)'/%3E%3Cellipse cx='16' cy='9.4' rx='4.5' ry='6.5' transform='rotate(216 16 16)'/%3E%3Cellipse cx='16' cy='9.4' rx='4.5' ry='6.5' transform='rotate(288 16 16)'/%3E%3C/g%3E%3Cg fill='%235b93ee' stroke='%23ffffff' stroke-width='1.4' stroke-linejoin='round'%3E%3Cellipse cx='16' cy='9.4' rx='4.5' ry='6.5' transform='rotate(0 16 16)'/%3E%3Cellipse cx='16' cy='9.4' rx='4.5' ry='6.5' transform='rotate(72 16 16)'/%3E%3Cellipse cx='16' cy='9.4' rx='4.5' ry='6.5' transform='rotate(144 16 16)'/%3E%3Cellipse cx='16' cy='9.4' rx='4.5' ry='6.5' transform='rotate(216 16 16)'/%3E%3Cellipse cx='16' cy='9.4' rx='4.5' ry='6.5' transform='rotate(288 16 16)'/%3E%3C/g%3E%3Ccircle cx='16' cy='16' r='4.6' fill='%23ffffff' stroke='%231d3a78' stroke-width='1.2'/%3E%3Ccircle cx='16' cy='16' r='1.9' fill='%23f3cf6a'/%3E%3C/g%3E%3C/svg%3E") 16 16, pointer;
+  }
+  .magic-btn:active {
+    cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32'%3E%3Cg transform='translate(16 16) scale(0.72) translate(-16 -16)'%3E%3Cg fill='%231d3a78' stroke='%231d3a78' stroke-width='3.6' stroke-linejoin='round'%3E%3Cellipse cx='16' cy='9.4' rx='4.5' ry='6.5' transform='rotate(0 16 16)'/%3E%3Cellipse cx='16' cy='9.4' rx='4.5' ry='6.5' transform='rotate(72 16 16)'/%3E%3Cellipse cx='16' cy='9.4' rx='4.5' ry='6.5' transform='rotate(144 16 16)'/%3E%3Cellipse cx='16' cy='9.4' rx='4.5' ry='6.5' transform='rotate(216 16 16)'/%3E%3Cellipse cx='16' cy='9.4' rx='4.5' ry='6.5' transform='rotate(288 16 16)'/%3E%3C/g%3E%3Cg fill='%235b93ee' stroke='%23ffffff' stroke-width='1.4' stroke-linejoin='round'%3E%3Cellipse cx='16' cy='9.4' rx='4.5' ry='6.5' transform='rotate(0 16 16)'/%3E%3Cellipse cx='16' cy='9.4' rx='4.5' ry='6.5' transform='rotate(72 16 16)'/%3E%3Cellipse cx='16' cy='9.4' rx='4.5' ry='6.5' transform='rotate(144 16 16)'/%3E%3Cellipse cx='16' cy='9.4' rx='4.5' ry='6.5' transform='rotate(216 16 16)'/%3E%3Cellipse cx='16' cy='9.4' rx='4.5' ry='6.5' transform='rotate(288 16 16)'/%3E%3C/g%3E%3Ccircle cx='16' cy='16' r='4.6' fill='%23ffffff' stroke='%231d3a78' stroke-width='1.2'/%3E%3Ccircle cx='16' cy='16' r='1.9' fill='%23f3cf6a'/%3E%3C/g%3E%3C/svg%3E") 16 16, pointer;
+  }
+}
+
 /* Lenis */
 html.lenis,
 html.lenis body {
