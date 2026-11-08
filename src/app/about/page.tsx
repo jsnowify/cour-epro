@@ -143,8 +143,8 @@ export default function AboutPage() {
           </A>
           <A x={559} y={2005} className={`${label} text-crimson`}><span id="founder">FOUNDER &amp; CREATOR</span></A>
           <A as="h2" x={556} y={2028} fs={64} className="font-display leading-none">SNOWI</A>
-          <A x={559} y={2112} w={650} className="text-[14px] leading-[1.65]">
-            Snowi founded COUR E-PRO, formerly Aeronova Esport, in January 2026. They are a creative web designer and developer who works in motion web design and human-computer interaction, and they designed and built every detail of this site, from its motion to its smallest interaction. Snowi also plays Mid Lane for COUR UNO.
+          <A x={559} y={2108} w={650} className="text-[14px] leading-[1.7]">
+            He, she, or whatever you want to call Snowi, started COUR E-PRO in January 2026, back when it was still Aeronova Esport. Snowi is a creative web designer and developer who works in motion web design and human-computer interaction: how a site moves, and how it feels to use. Snowi designed and built this one, and plays Mid Lane for COUR UNO.
           </A>
           <A x={559} y={2259}><MagicLink href={PORTFOLIO_URL} label="Snowi's portfolio">VIEW SNOWI&apos;S PORTFOLIO</MagicLink></A>
         </Block>

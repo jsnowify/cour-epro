@@ -222,26 +222,39 @@ html[data-revealing] #top {
   opacity: 0;
 }
 
-/* Portfolio button (Frieren). Default: a black slab with a flower in bloom at the left. Hover or focus: a drawn garden grows out of the flower. */
+/* Portfolio button (Frieren). Default: a black slab with a twinkling sparkle at the left. Hover or focus: a drawn garden grows out of it.
+   Everything has an entrance (the rules on :hover / :focus-within) and a choreographed exit (the base rules, with their own delays). */
 .magic-btn {
-  background: #0a0a0a;
+  background-color: #0a0a0a;
   color: #ffffff;
-  transition: box-shadow 0.5s ease;
+  /* leaving: back to black just as the circle starts winding back, so its edge shows against the black */
+  transition: box-shadow 0.6s ease, background-color 0.25s linear 0.18s;
 }
 .magic:hover .magic-btn,
 .magic:focus-within .magic-btn {
+  background-color: #bdd8fb; /* the colour of the horizon in the drawing; swaps once the garden has grown over the black */
   box-shadow: 0 10px 34px -6px rgb(63 123 224 / 0.7);
+  transition: box-shadow 0.5s ease, background-color 0s linear 0.9s;
 }
 .magic-label {
+  position: relative;
   z-index: 2;
-  text-shadow: none;
-  transition: color 0.6s ease, text-shadow 0.6s ease;
+  display: block;
+  color: #ffffff;
 }
-/* once the garden has grown, the label turns deep blue (with a soft halo over the flowers) */
-.magic:hover .magic-label,
-.magic:focus-within .magic-label {
+/* the deep-blue copy of the label: only shows inside the circle (same circle and timing as the garden) */
+.magic-label-sky {
+  z-index: 3;
   color: #1d3a78;
-  text-shadow: 0 0 7px #eaf3ff, 0 0 3px #eaf3ff, 0 0 1px #eaf3ff;
+  text-shadow: 0 1px 0 rgb(255 255 255 / 0.55);
+  clip-path: circle(0px at -22px 50%);
+  transition: clip-path 0.8s cubic-bezier(0.65, 0, 0.35, 1) 0.18s; /* exit */
+  pointer-events: none;
+}
+.magic:hover .magic-label-sky,
+.magic:focus-within .magic-label-sky {
+  clip-path: circle(440px at -22px 50%);
+  transition: clip-path 1s cubic-bezier(0.6, 0, 0.2, 1);
 }
 
 /* a light streak glides across the black slab now and then */
@@ -254,36 +267,114 @@ html[data-revealing] #top {
   18%, 100% { translate: 450% 0; }
 }
 
-/* the spark: a flower in bloom, always turning slowly */
+/* the spark: a sparkle that twinkles at rest and blooms into a flower on hover; on the way out it returns last */
 .magic-spark {
   z-index: 2;
-  animation: magic-bloom 3.6s ease-in-out infinite;
+  color: #cfe4ff;
+}
+.magic-star {
+  animation: magic-twinkle 2.6s ease-in-out infinite;
+  transition: opacity 0.4s ease 0.6s, transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) 0.6s;
+}
+@keyframes magic-twinkle {
+  0%, 100% { transform: scale(0.78) rotate(0deg); opacity: 0.85; }
+  50% { transform: scale(1.18) rotate(45deg); opacity: 1; }
+}
+.magic-sparkflower {
+  opacity: 0;
+  transform: scale(0.2) rotate(-90deg);
+  transition: opacity 0.25s ease, transform 0.35s ease-in;
+}
+.magic:hover .magic-star,
+.magic:focus-within .magic-star {
+  animation: none;
+  opacity: 0;
+  transform: scale(0.2) rotate(90deg);
+  transition: opacity 0.2s ease, transform 0.3s ease-in;
+}
+.magic:hover .magic-sparkflower,
+.magic:focus-within .magic-sparkflower {
+  opacity: 1;
+  transform: scale(1) rotate(0deg);
+  animation: magic-bloom 3.6s ease-in-out 0.55s infinite;
+  transition: opacity 0.3s ease, transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 @keyframes magic-bloom {
-  0%, 100% { transform: rotate(0deg) scale(0.9); }
+  0%, 100% { transform: rotate(0deg) scale(0.92); }
   50% { transform: rotate(36deg) scale(1.15); }
 }
 
-/* the garden: grows out of the spark like a widening circle (slowly), folds back quickly */
-.magic-garden {
+/* the four corners: a bracket at rest, a flower on hover; on the way out they fold back one after the other, last */
+.magic-corner {
+  --o: -3px;
+  position: absolute;
+  width: 9px;
+  height: 9px;
+  pointer-events: none;
+  transition: width 0.4s ease 0.45s, height 0.4s ease 0.45s, top 0.4s ease 0.45s, left 0.4s ease 0.45s, right 0.4s ease 0.45s, bottom 0.4s ease 0.45s;
+}
+.magic-corner[data-c="tl"] { left: var(--o); top: var(--o); }
+.magic-corner[data-c="tr"] { right: var(--o); top: var(--o); }
+.magic-corner[data-c="bl"] { left: var(--o); bottom: var(--o); }
+.magic-corner[data-c="br"] { right: var(--o); bottom: var(--o); }
+.magic:hover .magic-corner,
+.magic:focus-within .magic-corner {
+  --o: -10px;
+  width: 20px;
+  height: 20px;
+  transition: width 0.35s ease, height 0.35s ease, top 0.35s ease, left 0.35s ease, right 0.35s ease, bottom 0.35s ease;
+}
+.magic-bracket {
   position: absolute;
   inset: 0;
-  width: 100%;
-  height: 100%;
+  border: 0 solid #c8102e;
+  transition: opacity 0.3s ease calc(0.5s + var(--cd, 0ms)), transform 0.35s ease calc(0.5s + var(--cd, 0ms));
+}
+.magic-corner[data-c="tl"] .magic-bracket { border-left-width: 2px; border-top-width: 2px; }
+.magic-corner[data-c="tr"] .magic-bracket { border-right-width: 2px; border-top-width: 2px; }
+.magic-corner[data-c="bl"] .magic-bracket { border-left-width: 2px; border-bottom-width: 2px; }
+.magic-corner[data-c="br"] .magic-bracket { border-right-width: 2px; border-bottom-width: 2px; }
+.magic:hover .magic-bracket,
+.magic:focus-within .magic-bracket {
+  opacity: 0;
+  transform: scale(0.4);
+  transition: opacity 0.2s ease, transform 0.3s ease;
+}
+.magic-cornerflower {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transform: scale(0.15) rotate(-120deg);
+  transition: opacity 0.3s ease var(--cd, 0ms), transform 0.4s ease-in var(--cd, 0ms); /* fold back one after the other */
+}
+.magic:hover .magic-cornerflower,
+.magic:focus-within .magic-cornerflower {
+  opacity: 1;
+  transform: scale(1) rotate(0deg);
+  transition: opacity 0.25s ease var(--cd, 0ms), transform 0.45s cubic-bezier(0.34, 1.56, 0.64, 1) var(--cd, 0ms);
+}
+
+/* the garden: grows out of the sparkle like a widening circle (slowly); on the way out the stems lower first, then the circle winds back */
+.magic-garden {
+  position: absolute;
+  left: -1px;
+  top: -1px;
+  width: calc(100% + 2px);
+  height: calc(100% + 2px);
   z-index: 1;
   pointer-events: none;
-  clip-path: circle(0% at 28px 50%);
-  transition: clip-path 0.3s ease-in;
+  clip-path: circle(0px at 29px 50%);
+  transition: clip-path 0.8s cubic-bezier(0.65, 0, 0.35, 1) 0.18s;
 }
 .magic:hover .magic-garden,
 .magic:focus-within .magic-garden {
-  clip-path: circle(170% at 28px 50%);
+  clip-path: circle(440px at 29px 50%);
   transition: clip-path 1s cubic-bezier(0.6, 0, 0.2, 1);
 }
-/* each stem grows up in turn, left to right, then sways */
+/* each stem grows up in turn (left to right), then sways; leaving, they lower right to left */
 .magic-stem {
   transform: scaleY(0);
-  transition: transform 0.2s ease-in;
+  transition: transform 0.35s cubic-bezier(0.55, 0, 0.85, 0.3) var(--rd, 0ms);
 }
 .magic:hover .magic-stem,
 .magic:focus-within .magic-stem {
@@ -296,9 +387,76 @@ html[data-revealing] #top {
   0%, 100% { transform: scaleY(1) skewX(-2.5deg); }
   50% { transform: scaleY(1) skewX(2.5deg); }
 }
+
+/* the garden is alive (only while it is showing, so it costs nothing at rest) */
+.magic-cloud,
+.magic-twinkle,
+.magic-butterfly,
+.magic-wings,
+.magic-petal {
+  animation-play-state: paused;
+}
+.magic:hover .magic-cloud,
+.magic:hover .magic-twinkle,
+.magic:hover .magic-butterfly,
+.magic:hover .magic-wings,
+.magic:hover .magic-petal,
+.magic:focus-within .magic-cloud,
+.magic:focus-within .magic-twinkle,
+.magic:focus-within .magic-butterfly,
+.magic:focus-within .magic-wings,
+.magic:focus-within .magic-petal {
+  animation-play-state: running;
+}
+.magic-cloud-a { animation: magic-cloud-a 9s ease-in-out infinite alternate; }
+.magic-cloud-b { animation: magic-cloud-b 11s ease-in-out infinite alternate; }
+@keyframes magic-cloud-a { from { translate: 0 0; } to { translate: 34px 0; } }
+@keyframes magic-cloud-b { from { translate: 0 0; } to { translate: -30px 0; } }
+.magic-twinkle {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: magic-twinkle-s 1.9s ease-in-out infinite;
+  animation-delay: var(--td, 0s);
+}
+@keyframes magic-twinkle-s {
+  0%, 100% { transform: scale(0.25); opacity: 0.2; }
+  50% { transform: scale(1.1); opacity: 1; }
+}
+.magic-bf1 { animation: magic-fly-1 9s linear infinite; }
+.magic-bf2 { animation: magic-fly-2 12s linear infinite; animation-delay: -4s; }
+@keyframes magic-fly-1 {
+  0% { translate: -14px 16px; }
+  30% { translate: 92px 8px; }
+  55% { translate: 172px 15px; }
+  80% { translate: 252px 7px; }
+  100% { translate: 338px 14px; }
+}
+@keyframes magic-fly-2 {
+  0% { translate: 336px 10px; }
+  35% { translate: 240px 16px; }
+  65% { translate: 130px 7px; }
+  100% { translate: -14px 13px; }
+}
+.magic-wings {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: magic-flap 0.3s ease-in-out infinite alternate;
+}
+@keyframes magic-flap { from { transform: scaleX(1); } to { transform: scaleX(0.3); } }
+.magic-petal {
+  animation: magic-fall 5.5s linear infinite;
+  animation-delay: var(--pd, 0s);
+}
+@keyframes magic-fall {
+  0% { translate: 0 0; rotate: 0deg; opacity: 0; }
+  10% { opacity: 0.95; }
+  100% { translate: var(--px, 10px) 56px; rotate: 300deg; opacity: 0; }
+}
+
 @media (prefers-reduced-motion: reduce) {
-  .magic-streak, .magic-spark, .magic-stem { animation: none !important; }
-  .magic-btn, .magic-label, .magic-garden, .magic-stem { transition: none; }
+  .magic-streak, .magic-star, .magic-sparkflower, .magic-stem, .magic-cloud, .magic-twinkle, .magic-butterfly, .magic-wings, .magic-petal { animation: none !important; }
+  .magic-btn, .magic:hover .magic-btn, .magic:focus-within .magic-btn { transition: none; }
+  .magic-label-sky, .magic-garden, .magic-stem, .magic-star, .magic-sparkflower, .magic-corner, .magic-bracket, .magic-cornerflower { transition: none; }
 }
 
 /* The magic button has its own cursor: a blue flower (it closes a little while pressed). Mouse / trackpad only. */

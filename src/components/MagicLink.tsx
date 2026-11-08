@@ -4,15 +4,21 @@ import { useRef, type ReactNode } from "react";
 
 /**
  * The portfolio button. The magic is the field of blue flowers (moonweed) that grows around Himmel's statue in Frieren.
- *  - At rest it is a black slab: a flower in bloom (the spark) at the left of the label, a light streak that glides across now
- *    and then, and a targeting frame (corner brackets, like the grid's crosshairs) around it.
- *  - On hover or keyboard focus it turns into a garden. A drawn meadow grows out of the spark like a widening circle: pale
- *    sky, soft hills, grass, and moonweed on stems with leaves and fine ink outlines, each stem growing up in turn and then
- *    swaying. The frame flies outward, the label turns deep blue, and flowers drift up and fade. Pressing lets go of more.
+ *  - At rest it is a black slab: a four-point sparkle at the left of the label (it twinkles), a light streak that glides across
+ *    now and then, and a targeting frame (four corner brackets, like the grid's crosshairs) around it.
+ *  - On hover or keyboard focus it turns into a garden. The sparkle blooms into a flower and a drawn meadow grows out of it
+ *    like a widening circle: pale sky, soft hills, grass, and moonweed on stems with leaves and fine ink outlines, each stem
+ *    growing up in turn and then swaying. The four corner brackets turn into flowers too. Flowers drift up and fade.
+ *    Pressing lets go of more.
+ *  - The garden is alive: clouds drift, little stars twinkle in the sky, two butterflies cross it, petals fall.
+ *  - Leaving is choreographed too: the stems lower from right to left, the circle winds back into the sparkle with a long
+ *    ease, the corner flowers fold back into brackets one after the other, the sparkle returns last, and a few seeds drift out.
+ *  - The meadow keeps a clear band of sky behind the label (only the short flowers stand there, the tall ones frame it), so
+ *    the text stays easy to read.
  *  - The cursor over it is a small blue flower.
  * Drifting flowers are throw-away elements animated with the Web Animations API (transform and opacity only). "Reduce
- * motion" shows the grown garden at once and turns the streak, the sway and the drifting off. It is a real <a>: keyboard,
- * middle click and screen readers all work.
+ * motion" shows the grown garden at once and turns the twinkle, the streak, the sway and the drifting off. It is a real <a>:
+ * keyboard, middle click and screen readers all work.
  */
 const BLUES = ["#3f7be0", "#5b93ee", "#7fb2f5", "#a9cbf8", "#d6e6fc"];
 
@@ -32,10 +38,11 @@ function rng(seed: number) {
   };
 }
 
-type Stem = { x: number; h: number; lean: number; size: number; color: string; petals: number; spin: number; leaf: number; delay: number };
+type Stem = { x: number; h: number; lean: number; size: number; color: string; petals: number; spin: number; leaf: number; delay: number; leave: number };
 const W = 320; // the meadow is drawn in a 320 x 52 box and stretched to the button
 const H = 52;
-const GROUND = 45;
+const GROUND = 46;
+const LANE: [number, number] = [52, 296]; // where the label sits (in the 320-wide box): only short flowers here
 /** The stems of the drawn meadow, left to right. */
 const STEMS: Stem[] = (() => {
   const r = rng(21);
@@ -45,7 +52,7 @@ const STEMS: Stem[] = (() => {
     const x = 6 + (i / (n - 1)) * (W - 12) + (r() - 0.5) * 6;
     out.push({
       x,
-      h: 9 + r() * 20,
+      h: x > LANE[0] && x < LANE[1] ? 4 + r() * 5 : 13 + r() * 12, // short behind the label, tall at the two ends
       lean: (r() - 0.5) * 7,
       size: 0.3 + r() * 0.22,
       color: BLUES[Math.floor(r() * 4)],
@@ -53,6 +60,7 @@ const STEMS: Stem[] = (() => {
       spin: Math.round(r() * 72),
       leaf: r() > 0.5 ? 1 : -1,
       delay: Math.round(x * 3.2 + r() * 120), // grows left to right
+      leave: Math.round((W - x) * 1.1), // lowers right to left
     });
   }
   return out;
@@ -60,7 +68,7 @@ const STEMS: Stem[] = (() => {
 /** Blades of grass along the ground. */
 const GRASS: { x: number; h: number }[] = (() => {
   const r = rng(5);
-  return Array.from({ length: 46 }, () => ({ x: 2 + r() * (W - 4), h: 3 + r() * 5 }));
+  return Array.from({ length: 46 }, () => ({ x: 2 + r() * (W - 4), h: 2.5 + r() * 3.5 }));
 })();
 
 function Garden() {
@@ -74,16 +82,29 @@ function Garden() {
         </linearGradient>
       </defs>
       <rect width={W} height={H} fill="url(#mg-sky)" />
-      {/* soft clouds */}
-      <g fill="#ffffff" opacity=".75">
+      {/* soft clouds that drift */}
+      <g className="magic-cloud magic-cloud-a" fill="#ffffff" opacity=".75">
         <ellipse cx="58" cy="9" rx="16" ry="3.2" />
         <ellipse cx="72" cy="7.4" rx="10" ry="3" />
+      </g>
+      <g className="magic-cloud magic-cloud-b" fill="#ffffff" opacity=".75">
         <ellipse cx="238" cy="12" rx="18" ry="3.2" />
         <ellipse cx="252" cy="10.2" rx="9" ry="2.8" />
       </g>
+      {/* little stars that twinkle in the pale sky */}
+      {[
+        [112, 8, 0],
+        [182, 5, 0.7],
+        [286, 9, 1.3],
+        [28, 8, 0.4],
+      ].map(([x, y, d], i) => (
+        <g key={i} transform={`translate(${x} ${y})`}>
+          <path className="magic-twinkle" style={{ ["--td" as string]: `${d}s` }} d="M0 -3C.4 -.9 .9 -.4 3 0C.9 .4 .4 .9 0 3C-.4 .9 -.9 .4 -3 0C-.9 -.4 -.4 -.9 0 -3Z" fill="#ffffff" />
+        </g>
+      ))}
       {/* far and near hills, with a pen line along the top */}
-      <path d={`M0 36 C40 27 84 33 130 29 S 226 27 ${W} 33 V${H} H0 Z`} fill="#b9dcb4" stroke={ink} strokeWidth=".7" strokeLinejoin="round" vectorEffect="non-scaling-stroke" />
-      <path d={`M0 ${GROUND - 1} C44 ${GROUND - 7} 92 ${GROUND + 1} 142 ${GROUND - 3} S 238 ${GROUND - 6} ${W} ${GROUND - 1} V${H} H0 Z`} fill="#86c08a" stroke={ink} strokeWidth=".7" strokeLinejoin="round" vectorEffect="non-scaling-stroke" />
+      <path d={`M0 41 C40 36 84 40 130 37 S 226 36 ${W} 40 V${H} H0 Z`} fill="#b9dcb4" stroke={ink} strokeWidth=".7" strokeLinejoin="round" vectorEffect="non-scaling-stroke" />
+      <path d={`M0 ${GROUND - 1} C44 ${GROUND - 4} 92 ${GROUND + 1} 142 ${GROUND - 2} S 238 ${GROUND - 4} ${W} ${GROUND - 1} V${H} H0 Z`} fill="#86c08a" stroke={ink} strokeWidth=".7" strokeLinejoin="round" vectorEffect="non-scaling-stroke" />
       {/* grass */}
       <g fill="#5fae78" stroke={ink} strokeWidth=".35" vectorEffect="non-scaling-stroke" strokeLinejoin="round">
         {GRASS.map((g, i) => (
@@ -96,7 +117,7 @@ function Garden() {
         const tx = st.x + st.lean;
         const step = 360 / st.petals;
         return (
-          <g key={i} className="magic-stem" style={{ ["--d" as string]: `${st.delay}ms`, ["--sway-delay" as string]: `${i * 120}ms`, transformOrigin: `${st.x}px ${GROUND + 2}px` }}>
+          <g key={i} className="magic-stem" style={{ ["--d" as string]: `${st.delay}ms`, ["--rd" as string]: `${st.leave}ms`, ["--sway-delay" as string]: `${i * 120}ms`, transformOrigin: `${st.x}px ${GROUND + 2}px` }}>
             <path d={`M${st.x} ${GROUND + 2} Q${st.x + st.lean * 0.2} ${GROUND - st.h * 0.5} ${tx} ${top}`} fill="none" stroke="#3f8a5a" strokeWidth="1" strokeLinecap="round" vectorEffect="non-scaling-stroke" />
             <ellipse cx={st.x + st.leaf * 2.6 + st.lean * 0.3} cy={GROUND - st.h * 0.42} rx="3" ry="1.2" transform={`rotate(${st.leaf * -28} ${st.x + st.lean * 0.3} ${GROUND - st.h * 0.42})`} fill="#5fae78" stroke={ink} strokeWidth=".35" vectorEffect="non-scaling-stroke" />
             <g transform={`translate(${tx} ${top}) scale(${st.size}) rotate(${st.spin})`}>
@@ -109,6 +130,31 @@ function Garden() {
           </g>
         );
       })}
+      {/* two butterflies cross the sky */}
+      {[
+        { cls: "magic-bf1", color: "#cdb9ff" },
+        { cls: "magic-bf2", color: "#ffe9a6" },
+      ].map((b) => (
+        <g key={b.cls} className={`magic-butterfly ${b.cls}`}>
+          <g className="magic-wings">
+            <ellipse cx="-2.4" cy="-1" rx="2.8" ry="2" fill={b.color} stroke={ink} strokeWidth=".35" vectorEffect="non-scaling-stroke" />
+            <ellipse cx="2.4" cy="-1" rx="2.8" ry="2" fill={b.color} stroke={ink} strokeWidth=".35" vectorEffect="non-scaling-stroke" />
+            <ellipse cx="-1.9" cy="1.2" rx="1.8" ry="1.4" fill={b.color} stroke={ink} strokeWidth=".35" vectorEffect="non-scaling-stroke" />
+            <ellipse cx="1.9" cy="1.2" rx="1.8" ry="1.4" fill={b.color} stroke={ink} strokeWidth=".35" vectorEffect="non-scaling-stroke" />
+          </g>
+          <path d="M0 -2.2V2.4" stroke={ink} strokeWidth=".8" strokeLinecap="round" vectorEffect="non-scaling-stroke" />
+        </g>
+      ))}
+      {/* petals fall through the garden */}
+      {[
+        [40, 0, 14],
+        [118, 1.6, -10],
+        [176, 0.8, 12],
+        [232, 2.6, -14],
+        [290, 1.2, 9],
+      ].map(([x, d, dx], i) => (
+        <ellipse key={i} className="magic-petal" cx={x} cy="-3" rx="1.7" ry="0.95" fill="#ffffff" stroke={ink} strokeWidth=".3" vectorEffect="non-scaling-stroke" style={{ ["--pd" as string]: `${d}s`, ["--px" as string]: `${dx}px` }} />
+      ))}
     </svg>
   );
 }
@@ -162,14 +208,21 @@ export default function MagicLink({ href, label, children }: { href: string; lab
     release(8);
   };
 
-  const corner = "pointer-events-none absolute size-[9px] border-crimson transition-all duration-300 ease-out group-hover/magic:size-[16px] group-focus-within/magic:size-[16px]";
+  const corners: { c: string; color: string }[] = [
+    { c: "tl", color: BLUES[1] },
+    { c: "tr", color: BLUES[3] },
+    { c: "br", color: BLUES[0] },
+    { c: "bl", color: BLUES[2] },
+  ];
   return (
-    <span className="magic group/magic relative inline-block" onPointerEnter={onEnter} onPointerDown={() => release(24)}>
-      {/* targeting frame: close around the button at rest, flies outward on hover */}
-      <span aria-hidden className={`${corner} -left-[3px] -top-[3px] border-l-2 border-t-2 group-hover/magic:-left-[10px] group-hover/magic:-top-[10px] group-focus-within/magic:-left-[10px] group-focus-within/magic:-top-[10px]`} />
-      <span aria-hidden className={`${corner} -right-[3px] -top-[3px] border-r-2 border-t-2 group-hover/magic:-right-[10px] group-hover/magic:-top-[10px] group-focus-within/magic:-right-[10px] group-focus-within/magic:-top-[10px]`} />
-      <span aria-hidden className={`${corner} -bottom-[3px] -left-[3px] border-b-2 border-l-2 group-hover/magic:-bottom-[10px] group-hover/magic:-left-[10px] group-focus-within/magic:-bottom-[10px] group-focus-within/magic:-left-[10px]`} />
-      <span aria-hidden className={`${corner} -bottom-[3px] -right-[3px] border-b-2 border-r-2 group-hover/magic:-bottom-[10px] group-hover/magic:-right-[10px] group-focus-within/magic:-bottom-[10px] group-focus-within/magic:-right-[10px]`} />
+    <span className="magic group/magic relative inline-block" onPointerEnter={onEnter} onPointerLeave={() => release(6)} onPointerDown={() => release(24)}>
+      {/* targeting frame: four brackets around the button at rest; on hover each one turns into a flower */}
+      {corners.map(({ c, color }, i) => (
+        <span key={c} aria-hidden data-c={c} className="magic-corner" style={{ ["--cd" as string]: `${i * 90}ms` }}>
+          <span className="magic-bracket" />
+          <Flower color={color} className="magic-cornerflower" />
+        </span>
+      ))}
 
       <a
         href={href}
@@ -183,9 +236,21 @@ export default function MagicLink({ href, label, children }: { href: string; lab
         <span aria-hidden className="magic-streak absolute inset-y-0 -left-1/3 w-1/3 -skew-x-[20deg] bg-gradient-to-r from-transparent via-white/30 to-transparent" />
         {/* the garden, drawn: grows out of the spark on hover */}
         <Garden />
-        {/* the spark: a flower in bloom */}
-        <Flower color={BLUES[2]} className="magic-spark absolute left-[18px] top-1/2 size-[19px] -translate-y-1/2" />
-        <span className="magic-label relative">{children}</span>
+        {/* the spark: a twinkling sparkle at rest, it blooms into a flower on hover */}
+        <span aria-hidden className="magic-spark absolute left-[18px] top-1/2 size-[19px] -translate-y-1/2">
+          <svg viewBox="0 0 24 24" className="magic-star absolute inset-0 size-full" fill="currentColor">
+            <path d="M12 0C12.8 7 17 11.2 24 12C17 12.8 12.8 17 12 24C11.2 17 7 12.8 0 12C7 11.2 11.2 7 12 0Z" />
+          </svg>
+          <Flower color={BLUES[2]} className="magic-sparkflower absolute inset-0 size-full" />
+        </span>
+        {/* two copies of the label: white over the black, deep blue over the garden. The blue one is revealed by the same
+            widening circle as the garden, so every letter changes colour exactly where the garden's edge passes it. */}
+        <span className="relative">
+          <span className="magic-label">{children}</span>
+          <span aria-hidden className="magic-label-sky absolute inset-0">
+            {children}
+          </span>
+        </span>
       </a>
 
       {/* drifting flowers start here (not clipped by the button) */}
