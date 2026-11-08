@@ -196,8 +196,7 @@ html[data-revealing] #top {
   from { opacity: 0.35; }
   to { opacity: 1; }
 }
-.preloader[hidden],
-html[data-preloaded] .preloader {
+.preloader[hidden] {
   display: none;
 }
 

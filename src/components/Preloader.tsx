@@ -11,9 +11,9 @@ import { useEffect, useRef } from "react";
  * riding along its bottom while the page fades in underneath.
  *
  * The count is real: it eases toward 92% while the page loads and only reaches 100 once the window has loaded and the fonts
- * are ready (never sooner than MIN_MS, so the frames are always readable; never later than FAILSAFE_MS). It plays once per
- * browser session; an inline script in the layout hides it before first paint on later loads. With "reduce motion" it never
- * shows, and without JavaScript a <noscript> rule hides it. Nothing re-renders while it runs: it only writes to the DOM.
+ * are ready (never sooner than MIN_MS, so the frames are always readable; never later than FAILSAFE_MS). It plays on every
+ * full load and reload (moving between pages inside the site does not replay it: the layout stays mounted). With "reduce
+ * motion" it never shows, and without JavaScript a <noscript> rule hides it. Nothing re-renders while it runs: it only writes to the DOM.
  */
 const MIN_MS = 1700;
 const FAILSAFE_MS = 7000;
@@ -31,17 +31,8 @@ export default function Preloader() {
     const el = root.current;
     if (!el) return;
     const html = document.documentElement;
-    const skip = html.hasAttribute("data-preloaded") || window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    const remember = () => {
-      try {
-        sessionStorage.setItem("cour_preloaded", "1");
-      } catch {
-        /* storage blocked: it just plays again next time */
-      }
-    };
-    if (skip) {
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
       el.hidden = true;
-      remember();
       return;
     }
 
@@ -72,7 +63,6 @@ export default function Preloader() {
       finished = true;
       cancelAnimationFrame(raf);
       paint(100);
-      remember();
       // 1. hold the last frame  2. the ink slides out  3. the curtain lifts, the page fades in
       setTimeout(() => {
         el.dataset.leaving = "ink";

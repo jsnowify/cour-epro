@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { getDb } from "@/lib/db";
+import { addVisit } from "@/lib/visits";
 import { emitVisit } from "@/lib/bus";
 
 /**
@@ -49,12 +49,12 @@ export async function POST(req: Request) {
   const seen = (h.get("cookie") ?? "").split(/;\s*/).includes(`${COOKIE}=${today}`);
   if (seen && !DEV) return NextResponse.json({ ok: true, counted: false });
 
-  const db = await getDb();
-  if (!db) return NextResponse.json({ ok: false, reason: "no-db" });
-  await db.execute({
-    sql: "INSERT INTO places (country, region, city, lat, lng, count, updated_at) VALUES (?, ?, ?, ?, ?, 1, ?) ON CONFLICT(country, region, city) DO UPDATE SET count = count + 1, updated_at = excluded.updated_at",
-    args: [country, region, city, lat, lng, new Date().toISOString()],
-  });
+  try {
+    if (!(await addVisit({ c: country, r: region, city, lat, lng }))) return NextResponse.json({ ok: false, reason: "no-db" });
+  } catch (err) {
+    console.error("visit not saved:", err instanceof Error ? err.message : err);
+    return NextResponse.json({ ok: false, reason: "db-error" }, { status: 503 });
+  }
 
   emitVisit(); // realtime: open map streams on this instance update right now
   const res = NextResponse.json({ ok: true, counted: true, place: { c: country, r: region, city, lat, lng } });

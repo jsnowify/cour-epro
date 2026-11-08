@@ -113,11 +113,13 @@ export default function VisitorMap() {
     (async () => {
       try {
         if (consent === "yes" && !sessionStorage.getItem("cour_visit")) {
-          sessionStorage.setItem("cour_visit", "1");
           const res = await fetch("/api/visit", { method: "POST", signal: ctrl.signal, headers: { "x-cour-consent": "1" } });
           const body: { counted?: boolean; place?: Omit<Place, "n">; reason?: string } = await res.json();
+          // a failed attempt (no database yet, server error) is retried on the next load instead of being skipped for the session
+          if (body.counted || (res.ok && !body.reason)) sessionStorage.setItem("cour_visit", "1");
           if (body.reason === "no-db") setNote("NOT COUNTED: THE DATABASE IS NOT CONNECTED YET.");
           else if (body.reason === "no-geo") setNote("NOT COUNTED: YOUR LOCATION IS NOT AVAILABLE.");
+          else if (body.reason === "db-error") setNote("NOT COUNTED: THE DATABASE DID NOT ANSWER. TRY AGAIN LATER.");
           if (body.counted && body.place) {
             // instant: add this visit to what is on screen now, without waiting for another round trip
             const cur = dataRef.current ?? { total: 0, places: 0, items: [] };
