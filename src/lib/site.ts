@@ -153,7 +153,7 @@ export const siteLd = {
       "@id": `${SITE_URL}/about#snowi`,
       name: "Snowi",
       jobTitle: `Founder of ${TEAM.name}; creative web designer and developer`,
-      description: `Snowi is a creative web designer and developer working in motion web design and human-computer interaction. They founded ${TEAM.name} (formerly ${TEAM.formerly}) in January 2026 and designed and built this website.`,
+      description: `Snowi is a creative web designer and developer working in motion web design and human-computer interaction. Snowi founded ${TEAM.name} (formerly ${TEAM.formerly}) in January 2026 and built this website from the ground up.`,
       knowsAbout: ["Creative web design", "Web development", "Motion web design", "Human-computer interaction"],
       url: TEAM.founderSite,
       image: `${SITE_URL}/assets/snowi.webp`,
