@@ -7,7 +7,7 @@ import Preloader from "@/components/Preloader";
 import SmoothScroll from "@/components/SmoothScroll";
 import JsonLd from "@/components/JsonLd";
 import { PORTFOLIO_URL } from "@/lib/links";
-import { SITE_URL, SUMMARY, siteLd } from "@/lib/site";
+import { OG_ALT, OG_IMAGE, SITE_URL, SUMMARY, siteLd } from "@/lib/site";
 import "./globals.css";
 
 const zenDots = Zen_Dots({ weight: "400", subsets: ["latin"], variable: "--font-zen-dots" });
@@ -39,8 +39,16 @@ export const metadata: Metadata = {
   publisher: "COUR E-PRO",
   category: "esports",
   alternates: { canonical: "/", languages: { "en-PH": "/" } },
-  openGraph: { type: "website", siteName: "COUR E-PRO", locale: "en_PH", url: SITE_URL, title: TITLE, description: SUMMARY },
-  twitter: { card: "summary_large_image", title: TITLE, description: SUMMARY },
+  openGraph: {
+    type: "website",
+    siteName: "COUR E-PRO",
+    locale: "en_PH",
+    url: SITE_URL,
+    title: TITLE,
+    description: SUMMARY,
+    images: [{ url: OG_IMAGE, width: 1200, height: 630, alt: OG_ALT }],
+  },
+  twitter: { card: "summary_large_image", title: TITLE, description: SUMMARY, images: [{ url: OG_IMAGE, alt: OG_ALT }] },
   robots: {
     index: true,
     follow: true,

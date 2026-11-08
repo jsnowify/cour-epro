@@ -26,6 +26,11 @@ export const TEAM = {
 export const SUMMARY =
   "COUR E-PRO (formerly Aeronova Esport) is a Philippines-based Mobile Legends: Bang Bang esports team founded by Snowi in January 2026, competing on the PH server. Tryouts are open for all five lanes.";
 
+/** The link preview (Discord, Facebook, X, search): a 1200x630 picture of the site itself, in public/og.jpg. */
+export const OG_IMAGE = "/og.jpg";
+export const OG_ALT =
+  "COUR E-PRO, a Philippines-based Mobile Legends esports team: the About page with the team name, fact sheet and the live code panel";
+
 export const abs = (path: string) => `${SITE_URL}${path === "/" ? "" : path}`;
 
 export const PAGES = [
@@ -84,9 +89,9 @@ export const pageMeta = (path: (typeof PAGES)[number]["path"]) => {
       type: "website" as const,
       siteName: TEAM.name,
       locale: "en_PH",
-      images: [{ url: `${SITE_URL}/opengraph-image`, width: 1200, height: 630, alt: "COUR E-PRO, Mobile Legends esports team, Philippines" }],
+      images: [{ url: `${SITE_URL}/og.jpg`, width: 1200, height: 630, alt: OG_ALT }],
     },
-    twitter: { card: "summary_large_image" as const, title: p.title, description: p.description, images: [`${SITE_URL}/opengraph-image`] },
+    twitter: { card: "summary_large_image" as const, title: p.title, description: p.description, images: [`${SITE_URL}/og.jpg`] },
   };
 };
 
@@ -129,7 +134,7 @@ export const siteLd = {
       alternateName: [TEAM.formerly, "COUR"],
       url: SITE_URL,
       logo: `${SITE_URL}/assets/press/cour-e-pro-logo.svg`,
-      image: `${SITE_URL}/opengraph-image`,
+      image: `${SITE_URL}/og.jpg`,
       description: SUMMARY,
       slogan: TEAM.motto,
       foundingDate: TEAM.founded,
