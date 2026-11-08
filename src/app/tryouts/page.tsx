@@ -193,7 +193,7 @@ export default function TryoutsPage() {
           );
         })}
         <Block x={1081} y={1981} w={179} h={359} bg="bg-black text-white">
-          <A x={1100} y={2002} className={`${label} text-crimson`}>ROLES</A>
+          <A x={1100} y={2002} className={`${label} text-crimson`}><span id="roles">ROLES</span></A>
           <A x={1100} y={2028} fs={22} className="font-display">ALL FIVE</A>
           <A x={1100} y={2068} w={139} className="text-[13px] leading-[1.5] text-white/70">Pick your main lane when you apply on Discord.</A>
         </Block>

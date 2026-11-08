@@ -3,6 +3,7 @@ import { FOOTER_H, Footer, Header, Page } from "@/components/cour";
 import { CtaBand, InfoCard, Intro, Rails, SectionHeader, Stats, kicker } from "@/components/sections";
 import Drift from "@/components/Drift";
 import { DISCORD_URL } from "@/lib/links";
+import { PressKitLink } from "@/components/Reader";
 
 // One grid cell of empty space between sections (md+ only; below 1100px the bands already stack with their own padding).
 const GAP = 180;
@@ -61,7 +62,7 @@ export default function AboutPage() {
             ["Server", "PH only"],
             ["Established", "Jan 2026"],
           ]}
-          link="PRESS KIT →"
+          link={<PressKitLink />}
         />
       </Intro>
 

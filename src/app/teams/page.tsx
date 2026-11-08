@@ -82,7 +82,9 @@ export default function TeamsPage() {
               {i === SUMMARY.length - 1 && <Box x={945} y={816} w={271} h={1} className="bg-black/12" />}
             </div>
           ))}
-          <A x={945} y={836} className="text-[13px] font-bold tracking-[0.52px] text-crimson">JOIN COUR DOS<Arrow /></A>
+          <A x={945} y={836} className="text-[13px] font-bold tracking-[0.52px] text-crimson">
+            <a href={DISCORD_URL} target="_blank" rel="noopener noreferrer">JOIN COUR DOS<Arrow /></a>
+          </A>
         </Block>
       </Intro>
 
@@ -130,7 +132,9 @@ export default function TeamsPage() {
               <Box x={201} y={r.y + 26} w={499} h={1} className="bg-white/8" />
             </div>
           ))}
-          <A x={201} y={1576} className="text-[13px] font-bold tracking-[0.52px] text-crimson">VIEW FULL ROSTER<Arrow /></A>
+          <A x={201} y={1576} className="text-[13px] font-bold tracking-[0.52px] text-crimson">
+            <a href="#roster">VIEW FULL ROSTER<Arrow /></a>
+          </A>
         </Block>
 
         <Block x={721} y={1261} w={539} h={359} bg="bg-crimson text-white">

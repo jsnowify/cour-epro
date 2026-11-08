@@ -159,6 +159,7 @@ export default function PageScramble() {
 
       e.preventDefault();
       e.stopPropagation(); // keep Next's own Link handler from navigating before we are done
+      window.dispatchEvent(new Event("cour:navigate")); // lets open dialogs (news reader, press kit) close before the page text scrambles out
       if (leaving.current) return;
       leaving.current = true;
 

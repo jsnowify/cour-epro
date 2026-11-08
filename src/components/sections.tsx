@@ -90,7 +90,23 @@ export function Intro({
 }
 
 /** White hero card (x 921, y 581): small title, label/value rows with hairlines, red link. */
-export function InfoCard({ title, rows, link }: { title: string; rows: [string, ReactNode][]; link: string }) {
+export function InfoCard({ title, rows, link, href }: { title: string; rows: [string, ReactNode][]; link: ReactNode; href?: string }) {
+  // a plain string label needs somewhere to go: internal route / #anchor, or an external URL in a new tab
+  const external = !!href && /^https?:\/\//.test(href);
+  const action =
+    typeof link !== "string" ? (
+      link
+    ) : href ? (
+      external ? (
+        <a href={href} target="_blank" rel="noopener noreferrer">
+          <ArrowText text={link} />
+        </a>
+      ) : (
+        <Link href={href}>
+          <ArrowText text={link} />
+        </Link>
+      )
+    ) : null; // no destination: never render a fake link
   return (
     <Block x={921} y={581} w={319} h={299} bg="bg-white">
       <A x={945} y={605} className={`${label} text-muted`}>{title}</A>
@@ -102,7 +118,7 @@ export function InfoCard({ title, rows, link }: { title: string; rows: [string, 
         </div>
       ))}
       <Box x={945} y={816} w={271} h={1} className="bg-black/12" />
-      <A x={945} y={836} className="text-[13px] font-bold tracking-[0.52px] text-crimson"><ArrowText text={link} /></A>
+      {action && <A x={945} y={836} className="text-[13px] font-bold tracking-[0.52px] text-crimson">{action}</A>}
     </Block>
   );
 }

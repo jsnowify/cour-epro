@@ -145,6 +145,26 @@ body {
   }
 }
 
+/* Preloader: six frames (background / ink), then the curtain lifts. */
+.preloader {
+  background: var(--pl-bg);
+  color: var(--pl-fg);
+}
+.preloader[data-stage="0"] { --pl-bg: #ffffff; --pl-fg: #0a0a0a; }
+.preloader[data-stage="1"] { --pl-bg: #c8102e; --pl-fg: #0a0a0a; }
+.preloader[data-stage="2"] { --pl-bg: #0a0a0a; --pl-fg: #c8102e; }
+.preloader[data-stage="3"] { --pl-bg: #ffffff; --pl-fg: #c8102e; }
+.preloader[data-stage="4"] { --pl-bg: #c8102e; --pl-fg: #ffffff; }
+.preloader[data-stage="5"] { --pl-bg: #0a0a0a; --pl-fg: #ffffff; }
+.preloader[data-leaving] {
+  clip-path: inset(0 0 100% 0);
+  transition: clip-path 0.8s cubic-bezier(0.76, 0, 0.24, 1);
+}
+.preloader[hidden],
+html[data-preloaded] .preloader {
+  display: none;
+}
+
 /* Lenis */
 html.lenis,
 html.lenis body {

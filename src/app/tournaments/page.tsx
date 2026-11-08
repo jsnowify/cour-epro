@@ -61,6 +61,7 @@ export default function TournamentsPage() {
             ["Dates", "TBA"],
           ]}
           link="GET UPDATES →"
+          href={DISCORD_URL}
         />
       </Intro>
 

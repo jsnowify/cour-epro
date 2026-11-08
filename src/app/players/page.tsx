@@ -125,7 +125,8 @@ export default function PlayersPage() {
             ["Server", "PH"],
             ["Season", <Season key="s" v="num" />],
           ]}
-          link="HOW ROLES WORK →"
+          link="OPEN ROLES →"
+          href="/tryouts#roles"
         />
       </Intro>
 

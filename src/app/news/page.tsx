@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { A, Band, Block, Box, ROW } from "@/components/canvas";
+import { StoryLink } from "@/components/Reader";
 import { FOOTER_H, Footer, Header, Page } from "@/components/cour";
 import { CtaBand, Intro, Rails, SectionHeader, kicker } from "@/components/sections";
 import Drift from "@/components/Drift";
@@ -20,9 +21,9 @@ const CHIPS = [
 ];
 
 const STORIES = [
-  { n: "01", tag: "ANNOUNCEMENT", date: "NOV 03", title: "Tryouts are now open for all five lanes", media: "bg-black", mediaText: "text-white", sub: "text-white/60" },
-  { n: "02", tag: "GUIDE", date: "NOV 02", title: "How the tryout process works, step by step", media: "bg-surface", mediaText: "text-black", sub: "text-black/60" },
-  { n: "03", tag: "EVENTS", date: "TBA", title: "Tournaments and events: to be announced", media: "bg-crimson", mediaText: "text-white", sub: "text-white/60" },
+  { id: "tryouts-open", n: "01", tag: "ANNOUNCEMENT", date: "NOV 03", title: "Tryouts are now open for all five lanes", media: "bg-black", mediaText: "text-white", sub: "text-white/60" },
+  { id: "process", n: "02", tag: "GUIDE", date: "NOV 02", title: "How the tryout process works, step by step", media: "bg-surface", mediaText: "text-black", sub: "text-black/60" },
+  { id: "events", n: "03", tag: "EVENTS", date: "TBA", title: "Tournaments and events: to be announced", media: "bg-crimson", mediaText: "text-white", sub: "text-white/60" },
 ];
 
 const ARCHIVE = [
@@ -78,7 +79,7 @@ export default function NewsPage() {
             <Box x={945} y={760} w={271} h={1} className="bg-black/8" />
           </div>
           <Box x={945} y={816} w={271} h={1} className="bg-black/12" />
-          <A x={945} y={836} className="text-[13px] font-bold tracking-[0.52px] text-crimson">READ ARTICLE<Arrow /></A>
+          <A x={945} y={836}><StoryLink id="rebrand" label="READ ARTICLE" /></A>
         </Block>
       </Intro>
 
@@ -125,7 +126,7 @@ export default function NewsPage() {
                 <A x={x + 20} y={1443} className={`${kicker} whitespace-pre text-muted`}>{`${s.date}  ·  ${s.tag}`}</A>
                 <A x={x + 20} y={1468} w={319} className="text-[17px] font-bold leading-[1.4]">{s.title}</A>
                 <A x={x + 20} y={1580} className="text-[13px] font-bold tracking-[0.52px] text-crimson">
-                  <Link href="/news">READ STORY<Arrow /></Link>
+                  <StoryLink id={s.id} />
                 </A>
               </Block>
             </div>
@@ -138,7 +139,6 @@ export default function NewsPage() {
       <Band top={1621} h={360}>
         <Block x={181} y={1621} w={1079} h={359} bg="bg-white">
           <A x={201} y={1645} className={`${label} text-crimson`}><span id="archive">ARCHIVE</span></A>
-          <A x={1240} y={1645} w={200} right className="text-[12px] font-bold tracking-[0.48px]">VIEW ALL<Arrow /></A>
           <Box x={201} y={1676} w={1039} h={1} className="bg-black/20" />
           {ARCHIVE.map((a, i) => {
             const y = 1700 + 46 * i;
