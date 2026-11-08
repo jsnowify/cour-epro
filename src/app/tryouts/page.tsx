@@ -1,3 +1,5 @@
+import JsonLd from "@/components/JsonLd";
+import { pageLd, pageMeta } from "@/lib/site";
 import { A, Band, Block, Box, GROUP, ROW } from "@/components/canvas";
 import { Btn, FOOTER_H, Footer, Header, Page } from "@/components/cour";
 import { CtaBand, Intro, Rails, SectionHeader, Stats, kicker } from "@/components/sections";
@@ -6,10 +8,12 @@ import { DISCORD_URL } from "@/lib/links";
 import Season from "@/components/Season";
 import { Arrow } from "@/components/Arrow";
 
+export const metadata = pageMeta("/tryouts");
+
 // One grid cell of empty space between sections (md+ only; below 1100px the bands already stack with their own padding).
 const GAP = 180;
 const gap = "md:mt-[180px]";
-const H = 2701 + 5 * GAP + FOOTER_H;
+const H = 3061 + 6 * GAP + FOOTER_H;
 
 const PHASES = [
   {
@@ -57,11 +61,27 @@ const STATUS = [
   { y: 776, k: "Schedule", v: "TBA" },
 ];
 
+/** Short, answer-first Q&A: shown on the page and mirrored as FAQPage structured data for search and answer engines. */
+const FAQ = [
+  { q: "Are tryouts open right now?", a: "Yes. All five lanes are open: 4 slots per lane on COUR UNO and 5 per lane on COUR DOS." },
+  { q: "How do I apply?", a: "Join our Discord and send your IGN and main role. The Discord is the only place to apply." },
+  { q: "What are the tryout phases?", a: "Gameplay and individual performance, a one-week observation, then a final review of skill and character fit." },
+  { q: "What format are the matches?", a: "5v5 matches instead of ranked games, because so many players joined the tryout server." },
+  { q: "Which server do we play on?", a: "Only the PH (Philippines) server." },
+  { q: "When is the tryout schedule?", a: "It has not been announced yet. It will be posted on our Discord." },
+];
+const faqLd = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: FAQ.map((f) => ({ "@type": "Question", name: f.q, acceptedAnswer: { "@type": "Answer", text: f.a } })),
+};
+
 const label = "text-[12px] font-bold tracking-[0.96px]";
 
 export default function TryoutsPage() {
   return (
     <Page h={H}>
+      <JsonLd data={[pageLd("/tryouts"), faqLd]} />
       <Header active={null} sticky />
       <Rails
         index={[
@@ -70,13 +90,14 @@ export default function TryoutsPage() {
           { y: 1104 + GAP, label: "PHASES" },
           { y: 1644 + 2 * GAP, label: "BULLETIN" },
           { y: 2004 + 3 * GAP, label: "ROLES" },
-          { y: 2364 + 4 * GAP, label: "APPLY" },
+          { y: 2364 + 4 * GAP, label: "FAQ" },
+          { y: 2724 + 5 * GAP, label: "APPLY" },
         ]}
         badge={{ label: "PHASES", big: "03" }}
         badgeY={1621 + 2 * GAP}
-        idY={2341 + 4 * GAP}
-        indexH={2120 + 4 * GAP}
-        railH={1560 + 4 * GAP}
+        idY={2701 + 5 * GAP}
+        indexH={2480 + 5 * GAP}
+        railH={1920 + 5 * GAP}
       />
 
       <Intro
@@ -196,6 +217,26 @@ export default function TryoutsPage() {
           <A x={1100} y={2002} className={`${label} text-crimson`}><span id="roles">ROLES</span></A>
           <A x={1100} y={2028} fs={22} className="font-display">ALL FIVE</A>
           <A x={1100} y={2068} w={139} className="text-[13px] leading-[1.5] text-white/70">Pick your main lane when you apply on Discord.</A>
+        </Block>
+      </Band>
+      </div>
+
+      {/* FAQ */}
+      <div className={gap}>
+      <Band top={1981} h={360}>
+        <Block x={181} y={1981} w={1079} h={359} bg="bg-white">
+          <A x={201} y={2005} className={`${label} text-crimson`}><span id="faq">FAQ</span></A>
+          <Box x={201} y={2036} w={1039} h={1} className="bg-black/20" />
+          {FAQ.map((f, i) => {
+            const x = 201 + 340 * (i % 3);
+            const y = 2056 + 142 * Math.floor(i / 3);
+            return (
+              <div key={f.q} className={GROUP}>
+                <A x={x} y={y} w={300} className="text-[14px] font-bold leading-[1.4]">{f.q}</A>
+                <A x={x} y={y + 34} w={300} className="text-[13px] leading-[1.6] text-muted">{f.a}</A>
+              </div>
+            );
+          })}
         </Block>
       </Band>
       </div>

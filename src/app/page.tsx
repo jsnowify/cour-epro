@@ -1,3 +1,5 @@
+import JsonLd from "@/components/JsonLd";
+import { pageLd, pageMeta } from "@/lib/site";
 import Link from "next/link";
 import type { CSSProperties } from "react";
 import { A, Band, Block, Box, GROUP, ROW } from "@/components/canvas";
@@ -8,6 +10,8 @@ import { DISCORD_URL } from "@/lib/links";
 import Season from "@/components/Season";
 import VisitorMap from "@/components/VisitorMap";
 import { Arrow } from "@/components/Arrow";
+
+export const metadata = pageMeta("/");
 
 // One grid cell of empty space between sections (md+ only; below 1100px the bands already stack with their own padding).
 const GAP = 180;
@@ -96,6 +100,7 @@ const label = "text-[12px] font-bold tracking-[0.96px]";
 export default function HomePage() {
   return (
     <Page h={H}>
+      <JsonLd data={pageLd("/")} />
       <Header active="home" sticky />
       <Rails
         index={[

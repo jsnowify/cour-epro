@@ -1,9 +1,13 @@
+import JsonLd from "@/components/JsonLd";
+import { pageLd, pageMeta } from "@/lib/site";
 import { A, Band, Block, Box } from "@/components/canvas";
 import { FOOTER_H, Footer, Header, Page } from "@/components/cour";
 import { CtaBand, InfoCard, Intro, Rails, SectionHeader, Stats, kicker } from "@/components/sections";
 import { DISCORD_URL } from "@/lib/links";
 import Season from "@/components/Season";
 import { Arrow } from "@/components/Arrow";
+
+export const metadata = pageMeta("/players");
 
 // One grid cell of empty space between sections (md+ only; below 1100px the bands already stack with their own padding).
 const GAP = 180;
@@ -91,6 +95,7 @@ function Avatar({ x, y, size, color, clipY }: { x: number; y: number; size: numb
 export default function PlayersPage() {
   return (
     <Page h={H}>
+      <JsonLd data={pageLd("/players")} />
       <Header active="players" sticky />
       <Rails
         index={[

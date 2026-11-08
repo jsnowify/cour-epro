@@ -1,8 +1,12 @@
+import JsonLd from "@/components/JsonLd";
+import { pageLd, pageMeta } from "@/lib/site";
 import { A, Band, Block, Box, Match } from "@/components/canvas";
 import { FOOTER_H, Footer, Header, Page } from "@/components/cour";
 import { CtaBand, InfoCard, Intro, Rails, SectionHeader, Stats, kicker } from "@/components/sections";
 import { DISCORD_URL } from "@/lib/links";
 import Season from "@/components/Season";
+
+export const metadata = pageMeta("/tournaments");
 
 // One grid cell of empty space between sections (md+ only; below 1100px the bands already stack with their own padding).
 const GAP = 180;
@@ -25,6 +29,7 @@ const path = "bg-crimson";
 export default function TournamentsPage() {
   return (
     <Page h={H}>
+      <JsonLd data={pageLd("/tournaments")} />
       <Header active="tournaments" sticky />
       <Rails
         index={[

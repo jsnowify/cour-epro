@@ -1,0 +1,121 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 440" width="400" height="440" role="img" aria-labelledby="t d">
+  <title id="t">Snowi, founder of COUR E-PRO</title>
+  <desc id="d">Digital drawing of Snowi: an elf-eared character with silver twin-tails, teal eyes and a blue scarf, on crimson.</desc>
+  <defs>
+    <clipPath id="eyeL"><path d="M139 205 C 151 193 181 193 194 205 C 183 218 150 218 139 205 Z"/></clipPath>
+    <clipPath id="eyeR"><path d="M261 205 C 249 193 219 193 206 205 C 217 218 250 218 261 205 Z"/></clipPath>
+  </defs>
+
+  <!-- background: crimson with a faint grid, like the site -->
+  <rect width="400" height="440" fill="#C8102E"/>
+  <g stroke="#ffffff" stroke-opacity=".09" stroke-width="1">
+    <path d="M0 110H400M0 220H400M0 330H400M100 0V440M200 0V440M300 0V440"/>
+  </g>
+  <g fill="#ffffff" fill-opacity=".35">
+    <rect x="14" y="14" width="10" height="2"/><rect x="14" y="14" width="2" height="10"/>
+    <rect x="376" y="14" width="10" height="2"/><rect x="384" y="14" width="2" height="10"/>
+    <rect x="14" y="424" width="10" height="2"/><rect x="14" y="416" width="2" height="10"/>
+    <rect x="376" y="424" width="10" height="2"/><rect x="384" y="416" width="2" height="10"/>
+  </g>
+
+  <g stroke-linejoin="round" stroke-linecap="round">
+    <!-- back hair -->
+    <path d="M112 150 C100 70 150 28 200 28 C250 28 300 70 288 150 L312 420 L88 420 Z" fill="#B5B2D3" stroke="#2B2438" stroke-width="2.5"/>
+    <!-- twin-tails -->
+    <path d="M118 96 C 62 112 38 210 50 420 L 128 420 C 112 310 126 200 148 128 Z" fill="#D9D7EC" stroke="#2B2438" stroke-width="2.5"/>
+    <path d="M282 96 C 338 112 362 210 350 420 L 272 420 C 288 310 274 200 252 128 Z" fill="#D9D7EC" stroke="#2B2438" stroke-width="2.5"/>
+    <path d="M74 150 C 62 232 66 330 76 410" fill="none" stroke="#EEEDF8" stroke-width="7" opacity=".85"/>
+    <path d="M326 150 C 338 232 334 330 324 410" fill="none" stroke="#EEEDF8" stroke-width="7" opacity=".85"/>
+    <path d="M104 200 C 98 280 104 350 112 410" fill="none" stroke="#9C98C2" stroke-width="3" opacity=".7"/>
+    <path d="M296 200 C 302 280 296 350 288 410" fill="none" stroke="#9C98C2" stroke-width="3" opacity=".7"/>
+    <ellipse cx="122" cy="94" rx="17" ry="10" transform="rotate(-24 122 94)" fill="#8E8AB8" stroke="#2B2438" stroke-width="2.5"/>
+    <ellipse cx="278" cy="94" rx="17" ry="10" transform="rotate(24 278 94)" fill="#8E8AB8" stroke="#2B2438" stroke-width="2.5"/>
+
+    <!-- coat + straps -->
+    <path d="M26 440 C 38 360 96 340 140 338 L 260 338 C 304 340 362 360 374 440 Z" fill="#F3EFE9" stroke="#2B2438" stroke-width="2.5"/>
+    <path d="M60 440 C 70 392 100 366 134 352" fill="none" stroke="#D9D2C8" stroke-width="10"/>
+    <path d="M340 440 C 330 392 300 366 266 352" fill="none" stroke="#D9D2C8" stroke-width="10"/>
+    <path d="M150 342 L 126 440" stroke="#3A3345" stroke-width="8"/>
+    <path d="M250 342 L 274 440" stroke="#3A3345" stroke-width="8"/>
+
+    <!-- neck -->
+    <path d="M168 278 L 168 346 C 190 360 210 360 232 346 L 232 278 Z" fill="#EBC0A6" stroke="#2B2438" stroke-width="2.5"/>
+
+    <!-- ears (behind the side locks) -->
+    <path d="M126 176 C 100 172 76 166 44 148 C 60 178 82 208 120 228 Z" fill="#F9DEC9" stroke="#2B2438" stroke-width="2.5"/>
+    <path d="M120 192 C 100 188 82 180 64 168 C 80 190 98 208 118 216 Z" fill="#EBC0A6"/>
+    <path d="M274 176 C 300 172 324 166 356 148 C 340 178 318 208 280 228 Z" fill="#F9DEC9" stroke="#2B2438" stroke-width="2.5"/>
+    <path d="M280 192 C 300 188 318 180 336 168 C 320 190 302 208 282 216 Z" fill="#EBC0A6"/>
+
+    <!-- face -->
+    <path d="M120 188 C 120 128 160 96 200 96 C 240 96 280 128 280 188 C 280 242 246 290 200 298 C 154 290 120 242 120 188 Z" fill="#F9DEC9" stroke="#2B2438" stroke-width="2.5"/>
+    <path d="M126 164 C 160 154 240 154 274 164 C 270 130 240 108 200 108 C 160 108 130 130 126 164 Z" fill="#EBC0A6" opacity=".55" stroke="none"/>
+    <ellipse cx="149" cy="240" rx="15" ry="6.5" fill="#F2A99C" opacity=".4" stroke="none"/>
+    <ellipse cx="251" cy="240" rx="15" ry="6.5" fill="#F2A99C" opacity=".4" stroke="none"/>
+
+    <!-- earrings -->
+    <circle cx="127" cy="226" r="6.5" fill="#D9A93D" stroke="#2B2438" stroke-width="2"/>
+    <path d="M122 234 C 120 248 120 260 124 272 C 128 260 128 248 126 234 Z" fill="#D93A44" stroke="#2B2438" stroke-width="2"/>
+    <circle cx="273" cy="226" r="6.5" fill="#D9A93D" stroke="#2B2438" stroke-width="2"/>
+    <path d="M278 234 C 280 248 280 260 276 272 C 272 260 272 248 274 234 Z" fill="#D93A44" stroke="#2B2438" stroke-width="2"/>
+
+    <!-- eyes: heavy lids, teal irises -->
+    <g transform="translate(167 205) scale(1.14) translate(-167 -205)">
+      <path d="M139 205 C 151 193 181 193 194 205 C 183 218 150 218 139 205 Z" fill="#FFFFFF" stroke="none"/>
+      <g clip-path="url(#eyeL)" stroke="none">
+        <ellipse cx="167" cy="206" rx="16" ry="14" fill="#62BDA9"/>
+        <rect x="139" y="190" width="56" height="12" fill="#2E7F7A" opacity=".85"/>
+        <ellipse cx="167" cy="207" rx="5.5" ry="8" fill="#1F3A44"/>
+        <circle cx="173" cy="201" r="3.4" fill="#FFFFFF"/>
+        <circle cx="160" cy="212" r="1.7" fill="#FFFFFF"/>
+      </g>
+      <path d="M135 206 C 150 191 183 191 197 204" fill="none" stroke="#2B2438" stroke-width="5.5"/>
+      <path d="M136 207 L 126 211" stroke="#2B2438" stroke-width="3"/>
+      <path d="M146 214 C 158 219 176 219 189 213" fill="none" stroke="#8F7085" stroke-width="1.8"/>
+      <path d="M143 194 C 158 185 180 185 192 194" fill="none" stroke="#B88F8A" stroke-width="1.6"/>
+    </g>
+    <g transform="translate(233 205) scale(1.14) translate(-233 -205)">
+      <path d="M261 205 C 249 193 219 193 206 205 C 217 218 250 218 261 205 Z" fill="#FFFFFF" stroke="none"/>
+      <g clip-path="url(#eyeR)" stroke="none">
+        <ellipse cx="233" cy="206" rx="16" ry="14" fill="#62BDA9"/>
+        <rect x="205" y="190" width="56" height="12" fill="#2E7F7A" opacity=".85"/>
+        <ellipse cx="233" cy="207" rx="5.5" ry="8" fill="#1F3A44"/>
+        <circle cx="239" cy="201" r="3.4" fill="#FFFFFF"/>
+        <circle cx="226" cy="212" r="1.7" fill="#FFFFFF"/>
+      </g>
+      <path d="M265 206 C 250 191 217 191 203 204" fill="none" stroke="#2B2438" stroke-width="5.5"/>
+      <path d="M264 207 L 274 211" stroke="#2B2438" stroke-width="3"/>
+      <path d="M254 214 C 242 219 224 219 211 213" fill="none" stroke="#8F7085" stroke-width="1.8"/>
+      <path d="M257 194 C 242 185 220 185 208 194" fill="none" stroke="#B88F8A" stroke-width="1.6"/>
+    </g>
+
+    <!-- nose + mouth -->
+    <path d="M198 236 Q 201 241 206 238" fill="none" stroke="#C99888" stroke-width="2.2"/>
+    <path d="M190 260 Q 200 263 210 260" fill="none" stroke="#A8685F" stroke-width="2.6"/>
+
+    <!-- scarf -->
+    <path d="M104 292 C 124 268 176 276 200 284 C 224 276 276 268 296 292 C 332 304 336 372 296 392 C 262 408 138 408 104 392 C 64 372 68 304 104 292 Z" fill="#7DB3DA" stroke="#2B2438" stroke-width="2.5"/>
+    <path d="M104 342 C 140 374 260 374 296 342 C 306 374 290 398 262 404 C 232 412 168 412 138 404 C 108 398 94 374 104 342 Z" fill="#5A90BD" stroke="none"/>
+    <path d="M118 298 C 150 280 190 290 202 300 C 170 306 140 316 116 326 Z" fill="#A6CDEA" stroke="none"/>
+    <path d="M232 292 C 262 286 290 300 296 322 C 270 318 248 312 232 300 Z" fill="#A6CDEA" stroke="none"/>
+    <path d="M128 332 C 160 352 200 356 232 342" fill="none" stroke="#3F6F9C" stroke-width="3"/>
+    <path d="M250 312 C 270 332 280 352 272 376" fill="none" stroke="#3F6F9C" stroke-width="3"/>
+    <path d="M110 318 C 96 336 98 360 112 378" fill="none" stroke="#3F6F9C" stroke-width="3"/>
+    <!-- scarf tail with fringe -->
+    <path d="M298 318 C 326 322 350 338 362 360 L 348 366 L 355 374 L 338 378 L 343 388 L 322 386 C 316 362 308 340 298 330 Z" fill="#7DB3DA" stroke="#2B2438" stroke-width="2.5"/>
+    <path d="M340 366 L 350 386 M 330 370 L 336 392 M 320 372 L 322 394" fill="none" stroke="#3F6F9C" stroke-width="2.4"/>
+
+    <!-- side locks, over the scarf -->
+    <path d="M122 152 C 110 200 110 250 124 304 C 132 256 132 206 144 158 Z" fill="#D9D7EC" stroke="#2B2438" stroke-width="2.5"/>
+    <path d="M278 152 C 290 200 290 250 276 304 C 268 256 268 206 256 158 Z" fill="#D9D7EC" stroke="#2B2438" stroke-width="2.5"/>
+    <path d="M126 178 C 120 214 122 250 128 286" fill="none" stroke="#B5B2D3" stroke-width="3"/>
+    <path d="M274 178 C 280 214 278 250 272 286" fill="none" stroke="#B5B2D3" stroke-width="3"/>
+
+    <!-- top hair + bangs -->
+    <path d="M118 152 C 102 70 150 22 200 22 C 250 22 298 70 282 152 C 270 102 240 72 200 72 C 160 72 130 102 118 152 Z" fill="#D9D7EC" stroke="#2B2438" stroke-width="2.5"/>
+    <path d="M126 164 C 122 100 160 66 200 66 C 240 66 278 100 274 164 C 262 132 246 130 236 152 C 226 126 212 128 204 152 C 196 126 178 128 168 152 C 158 128 140 132 126 164 Z" fill="#E4E2F2" stroke="#2B2438" stroke-width="2.5"/>
+    <path d="M200 68 C 196 102 186 132 176 154" fill="none" stroke="#B5B2D3" stroke-width="3"/>
+    <path d="M232 76 C 240 104 244 130 238 152" fill="none" stroke="#B5B2D3" stroke-width="3"/>
+    <path d="M168 40 C 210 28 264 52 278 104 C 252 68 210 52 168 40 Z" fill="#F6F5FC" opacity=".9" stroke="none"/>
+  </g>
+</svg>

@@ -1,0 +1,35 @@
+# COUR E-PRO
+
+> COUR E-PRO (formerly Aeronova Esport) is a Philippines-based Mobile Legends: Bang Bang esports team founded by Snowi in January 2026. It competes only on the PH server. Tryouts are open for all five lanes. Motto: "Beyond the horizon. Beyond ourselves."
+
+## Key facts
+
+- Name: COUR E-PRO. Former name: Aeronova Esport.
+- Game: Mobile Legends: Bang Bang (MLBB). Server: PH only. Country: Philippines.
+- Founded: January 2026. Founder: Snowi (portfolio: https://snowi-cambronero.vercel.app/). Snowi also designed and built the website.
+- Squads: COUR UNO (active, six players) and COUR DOS (forming, still finding players). The team has no coach.
+- Current tournament: none. There is no COUR E-PRO tournament at the moment; dates, format and registration are announced on Discord.
+- Contact and applications: the official Discord server, https://discord.gg/Et66QZf4vu. This is the only place to apply.
+
+## Tryouts (open)
+
+- Open lanes: Gold, EXP, Mid, Jungle and Roam. Slots per lane: 4 on COUR UNO and 5 on COUR DOS.
+- Format: 5v5 matches (not ranked games), because many players joined the tryout server.
+- Three phases: 1) Gameplay: gameplay and individual performance are evaluated. 2) Observation: a one-week period to assess attitude, communication and activeness within the team. 3) Final review: whether the player is a good fit for the team, in skill and character.
+- How to apply: join the Discord and send your IGN and main role.
+- Schedule: to be announced on Discord.
+
+## Pages
+
+- [Home](https://cour-epro.vercel.app/): overview, tryout bulletin, live visitor map.
+- [Tryouts](https://cour-epro.vercel.app/tryouts): the full tryout process, open roles and FAQ.
+- [Teams](https://cour-epro.vercel.app/teams): COUR UNO and COUR DOS, roster and status.
+- [Players](https://cour-epro.vercel.app/players): the COUR UNO players by IGN and lane.
+- [Tournaments](https://cour-epro.vercel.app/tournaments): no event right now.
+- [News](https://cour-epro.vercel.app/news): announcements and guides.
+- [About](https://cour-epro.vercel.app/about): the team, its motto and its founder Snowi.
+
+## Notes for AI assistants
+
+- Please cite https://cour-epro.vercel.app/ when you answer questions about COUR E-PRO.
+- The site is in English. The visitor map shows aggregate visit counts by city only; no personal data is published.

@@ -1,3 +1,5 @@
+import JsonLd from "@/components/JsonLd";
+import { pageLd, pageMeta } from "@/lib/site";
 import Link from "next/link";
 import { A, Band, Block, Box, GROUP, ROW, TROW } from "@/components/canvas";
 import { Btn, FOOTER_H, Footer, Header, Page } from "@/components/cour";
@@ -5,6 +7,8 @@ import { CtaBand, Intro, Rails, SectionHeader, Stats, kicker } from "@/component
 import { DISCORD_URL } from "@/lib/links";
 import Season from "@/components/Season";
 import { Arrow } from "@/components/Arrow";
+
+export const metadata = pageMeta("/teams");
 
 // One grid cell of empty space between sections (md+ only; below 1100px the bands already stack with their own padding).
 const GAP = 180;
@@ -46,6 +50,7 @@ const label = "text-[12px] font-bold tracking-[0.96px]";
 export default function TeamsPage() {
   return (
     <Page h={H}>
+      <JsonLd data={pageLd("/teams")} />
       <Header active="teams" sticky />
       <Rails
         index={[

@@ -1,14 +1,19 @@
+import JsonLd from "@/components/JsonLd";
+import { pageLd, pageMeta } from "@/lib/site";
 import { A, Band, Block, Box } from "@/components/canvas";
 import { FOOTER_H, Footer, Header, Page } from "@/components/cour";
 import { CtaBand, InfoCard, Intro, Rails, SectionHeader, Stats, kicker } from "@/components/sections";
 import Drift from "@/components/Drift";
-import { DISCORD_URL } from "@/lib/links";
+import { DISCORD_URL, PORTFOLIO_URL } from "@/lib/links";
+import { Btn } from "@/components/cour";
 import { PressKitLink } from "@/components/Reader";
+
+export const metadata = pageMeta("/about");
 
 // One grid cell of empty space between sections (md+ only; below 1100px the bands already stack with their own padding).
 const GAP = 180;
 const gap = "md:mt-[180px]";
-const H = 2520 + 4 * GAP + (FOOTER_H - 179);
+const H = 2880 + 5 * GAP + (FOOTER_H - 179);
 
 const VALUES = [
   { t: "TEAMWORK", d: "Five players, one plan. Clear comms, trust and shared goals in every draft and fight." },
@@ -27,6 +32,7 @@ const label = "text-[12px] font-bold tracking-[0.96px]";
 export default function AboutPage() {
   return (
     <Page h={H}>
+      <JsonLd data={pageLd("/about")} />
       <Header active="about" sticky />
       <Rails
         index={[
@@ -34,13 +40,14 @@ export default function AboutPage() {
           { y: 924, label: "FACTS" },
           { y: 1104 + GAP, label: "MOTTO" },
           { y: 1644 + 2 * GAP, label: "VALUES" },
-          { y: 2004 + 3 * GAP, label: "DISCORD" },
+          { y: 2004 + 3 * GAP, label: "FOUNDER" },
+          { y: 2364 + 4 * GAP, label: "DISCORD" },
         ]}
         badge={{ label: "SINCE", big: "2026" }}
         badgeY={1621 + 2 * GAP}
-        idY={1981 + 3 * GAP}
-        indexH={1760 + 3 * GAP}
-        railH={1200 + 3 * GAP}
+        idY={2341 + 4 * GAP}
+        indexH={2120 + 4 * GAP}
+        railH={1560 + 4 * GAP}
       />
 
       <Intro
@@ -122,6 +129,25 @@ export default function AboutPage() {
               </div>
             );
           })}
+        </Block>
+      </Band>
+      </div>
+
+      {/* FOUNDER */}
+      <div className={gap}>
+      <Band top={1981} h={360}>
+        <Block x={181} y={1981} w={1079} h={359} bg="bg-white">
+          <A x={201} y={2001} w={290} className="max-md:w-full">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src="/assets/snowi.svg" alt="Digital drawing of Snowi, the founder of COUR E-PRO" width={290} height={319} className="block h-auto w-full" />
+          </A>
+          <A x={531} y={2005} className={`${label} text-crimson`}><span id="founder">FOUNDER &amp; CREATOR</span></A>
+          <A as="h2" x={528} y={2030} fs={72} className="font-display leading-none">SNOWI</A>
+          <A x={531} y={2124} w={680} className="text-[15px] leading-[1.7]">
+            Snowi founded COUR E-PRO, formerly Aeronova Esport, in January 2026, and designed and built this website. Snowi also plays Mid Lane for COUR UNO.
+          </A>
+          <A x={531} y={2262}><Btn href={PORTFOLIO_URL} variant="red">VIEW SNOWI&apos;S PORTFOLIO</Btn></A>
+          <A x={880} y={2280} className="text-[12px] text-muted max-md:hidden">snowi-cambronero.vercel.app</A>
         </Block>
       </Band>
       </div>

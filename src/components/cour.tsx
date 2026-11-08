@@ -3,7 +3,7 @@ import type { CSSProperties, ReactNode } from "react";
 import { A, Band, Box } from "@/components/canvas";
 import GridMarquee from "@/components/GridMarquee";
 import Season from "@/components/Season";
-import { DISCORD_URL } from "@/lib/links";
+import { DISCORD_URL, PORTFOLIO_URL } from "@/lib/links";
 import { GRID_BG, NAV, type NavKey } from "@/lib/grid";
 import { Arrow } from "@/components/Arrow";
 import MobileHeader from "@/components/MobileHeader";
@@ -298,6 +298,14 @@ export function Footer({ top }: { top: number }) {
       </A>
       <A x={1420} y={bar + 14} right className="text-[11px] tracking-[0.44px] text-white/50">
         © 2026 COUR E-PRO · MOBILE LEGENDS: BANG BANG · PH SERVER
+      </A>
+      <A x={840} y={bar + 8} className="text-[11px] tracking-[0.44px] text-white/50">
+        <a href={PORTFOLIO_URL} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 hover:text-white">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src="/assets/snowi.svg" alt="" width={22} height={24} className="block h-[24px] w-[22px] object-cover object-top" />
+          BUILT BY SNOWI
+          <Arrow />
+        </a>
       </A>
       <A x={720} y={bar + 14} className="max-md:hidden text-[11px] tracking-[0.44px] text-white/50" as="div">
         <a href={DISCORD_URL} target="_blank" rel="noopener noreferrer" className="hover:text-white">DISCORD<Arrow /></a>
