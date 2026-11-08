@@ -1,6 +1,7 @@
 import JsonLd from "@/components/JsonLd";
 import { pageLd, pageMeta } from "@/lib/site";
 import Link from "next/link";
+import { DISCORD_URL } from "@/lib/links";
 import { A, Band, Block, Box, ROW } from "@/components/canvas";
 import { StoryLink } from "@/components/Reader";
 import { FOOTER_H, Footer, Header, Page } from "@/components/cour";
@@ -162,39 +163,17 @@ export default function NewsPage() {
 
       <div className={gap}>
       <CtaBand
-        kicker="STAY IN THE LOOP"
-        title="GET ALERTS"
-        text="Tryout schedules, scrim results and roster news before anyone else."
-        note=""
-      >
-        <A x={201} y={2184} w={700} className="max-md:w-full">
-          <form action="/news" method="get" id="alerts" className="contents">
-            <label htmlFor="alert-email" className="sr-only">Email address</label>
-            <input
-              id="alert-email"
-              name="email"
-              type="email"
-              required
-              placeholder="your@email.com"
-              className="block h-[56px] w-full bg-white px-5 text-[15px] text-black outline-none placeholder:text-muted focus:ring-2 focus:ring-black"
-            />
-          </form>
-        </A>
-        <A x={201} y={2256} className="text-[11px] font-bold tracking-[0.88px] text-white/70">EMAIL ADDRESS</A>
-        <A x={921} y={2184} w={319}>
-          <button
-            type="submit"
-            form="alerts"
-            className="group relative flex h-[56px] w-full items-center justify-between overflow-hidden bg-black pl-5 pr-4 text-[14px] font-bold tracking-[0.56px] text-white"
-          >
-            <span aria-hidden className="absolute inset-0 origin-right scale-x-0 bg-crimson transition-transform duration-500 ease-out group-hover:origin-left group-hover:scale-x-100" />
-            <span className="relative">SUBSCRIBE</span>
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src="/assets/v3/arrow-white.svg" alt="" width={22} height={22} className="relative block transition-transform duration-500 group-hover:translate-x-1" />
-          </button>
-        </A>
-        <A x={921} y={2256} w={319} className="text-[13px] text-white/80"><Drift>No spam. Unsubscribe anytime.</Drift></A>
-      </CtaBand>
+        kicker="LIVE ON DISCORD"
+        title="GET PINGED"
+        text="Tryout schedules, scrim results and roster news land on our Discord first. Join and switch on notifications."
+        steps={[
+          { t: "TRYOUT DATES", d: "Posted first on Discord." },
+          { t: "SCRIM RESULTS", d: "Shared after we play." },
+          { t: "ROSTER NEWS", d: "Who joins and who moves." },
+        ]}
+        cta={{ href: DISCORD_URL, label: "JOIN THE DISCORD" }}
+        note="Turn on server notifications to get pinged."
+      />
       </div>
 
       <div className={gap}>
