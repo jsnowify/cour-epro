@@ -60,7 +60,8 @@ function Dialog({ label, onClose, children }: { label: string; onClose: () => vo
       <div role="dialog" aria-modal="true" aria-label={label} className="relative flex max-h-[min(86vh,720px)] w-full max-w-[720px] flex-col bg-black text-white">
         <span aria-hidden className="absolute left-0 top-0 h-[10px] w-[10px] border-l-2 border-t-2 border-crimson" />
         <span aria-hidden className="absolute bottom-0 right-0 h-[10px] w-[10px] border-b-2 border-r-2 border-crimson" />
-        <div className="overflow-y-auto p-6 pb-4 md:p-10 md:pb-6">{children}</div>
+        {/* data-lenis-prevent: the page's smooth-scroll would otherwise swallow the wheel/touch and the dialog could not scroll */}
+        <div data-lenis-prevent className="min-h-0 overflow-y-auto overscroll-contain p-6 pb-4 md:p-10 md:pb-6">{children}</div>
         <div className="flex items-center justify-between gap-3 border-t border-white/10 px-6 py-4 md:px-10">
           <span className="text-[10px] tracking-[0.8px] text-white/40">ESC TO CLOSE</span>
           <button
@@ -157,7 +158,7 @@ const COLORS: [string, string, string][] = [
   ["White", "#FFFFFF", "bg-white text-black"],
 ];
 
-/** Opens the press kit: facts, colours, fonts and downloadable logos. */
+/** Opens the press kit: facts, colours, fonts and logo previews (view only). */
 export function PressKitLink({ label = "PRESS KIT" }: { label?: string }) {
   const { open, show, hide } = useOpen();
   return (
@@ -187,19 +188,19 @@ export function PressKitLink({ label = "PRESS KIT" }: { label?: string }) {
               { name: "White on black", file: "cour-e-pro-logo-white.svg", bg: "bg-[#141414]" },
             ].map((l) => (
               <div key={l.file} className="flex flex-col">
-                <div className={`flex h-[110px] items-center justify-center ${l.bg}`}>
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img src={`/assets/press/${l.file}`} alt={`COUR E-PRO logo, ${l.name.toLowerCase()}`} className="h-[64px] w-auto" />
-                </div>
-                <a
-                  href={`/assets/press/${l.file}`}
-                  download
-                  className="group relative flex h-[40px] items-center justify-between overflow-hidden bg-white/10 px-4 text-[11px] font-bold tracking-[0.48px]"
+                <div
+                  className={`flex h-[110px] select-none items-center justify-center ${l.bg}`}
+                  onContextMenu={(e) => e.preventDefault()}
                 >
-                  <span aria-hidden className="absolute inset-0 origin-right scale-x-0 bg-crimson transition-transform duration-500 ease-out group-hover:origin-left group-hover:scale-x-100 motion-reduce:transition-none" />
-                  <span className="relative">DOWNLOAD SVG</span>
-                  <span className="relative text-[10px] text-white/60 group-hover:text-white">{l.name.toUpperCase()}</span>
-                </a>
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src={`/assets/press/${l.file}`}
+                    alt={`COUR E-PRO logo, ${l.name.toLowerCase()}`}
+                    draggable={false}
+                    className="pointer-events-none h-[64px] w-auto"
+                  />
+                </div>
+                <p className="flex h-[40px] items-center bg-white/10 px-4 text-[10px] font-bold tracking-[0.48px] text-white/60">{l.name.toUpperCase()}</p>
               </div>
             ))}
           </div>

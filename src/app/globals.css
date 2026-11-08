@@ -480,3 +480,21 @@ html.lenis body {
 .lenis.lenis-stopped {
   overflow: hidden;
 }
+
+/* Reader / press kit dialog scrollbar: thin crimson thumb on a dark track, square like the rest of the site */
+[data-reader] [data-lenis-prevent] {
+  scrollbar-width: thin;
+  scrollbar-color: #c8102e rgba(255, 255, 255, 0.08);
+}
+[data-reader] [data-lenis-prevent]::-webkit-scrollbar {
+  width: 6px;
+}
+[data-reader] [data-lenis-prevent]::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.08);
+}
+[data-reader] [data-lenis-prevent]::-webkit-scrollbar-thumb {
+  background: #c8102e;
+}
+[data-reader] [data-lenis-prevent]::-webkit-scrollbar-thumb:hover {
+  background: #fff;
+}
