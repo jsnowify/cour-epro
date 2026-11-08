@@ -56,6 +56,7 @@ export default function VisitorMap() {
   const loaded = useRef(false);
   const bumpTimer = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
   const [bumped, setBumped] = useState<Set<string>>(new Set());
+  const [note, setNote] = useState<string | null>(null); // why this visit was not counted, if it was not
 
   /** Show new data right away and flash the rows whose count went up (or that just appeared). */
   const apply = useCallback((next: Data, force = false) => {
@@ -114,7 +115,9 @@ export default function VisitorMap() {
         if (consent === "yes" && !sessionStorage.getItem("cour_visit")) {
           sessionStorage.setItem("cour_visit", "1");
           const res = await fetch("/api/visit", { method: "POST", signal: ctrl.signal, headers: { "x-cour-consent": "1" } });
-          const body: { counted?: boolean; place?: Omit<Place, "n"> } = await res.json();
+          const body: { counted?: boolean; place?: Omit<Place, "n">; reason?: string } = await res.json();
+          if (body.reason === "no-db") setNote("NOT COUNTED: THE DATABASE IS NOT CONNECTED YET.");
+          else if (body.reason === "no-geo") setNote("NOT COUNTED: YOUR LOCATION IS NOT AVAILABLE.");
           if (body.counted && body.place) {
             // instant: add this visit to what is on screen now, without waiting for another round trip
             const cur = dataRef.current ?? { total: 0, places: 0, items: [] };
@@ -220,6 +223,7 @@ export default function VisitorMap() {
               <span>{fmt(rest.reduce((s, p) => s + p.n, 0))} {rest.reduce((s, p) => s + p.n, 0) === 1 ? "VISIT" : "VISITS"}</span>
             </li>
           )}
+          {note && <li className="px-2 pt-1 text-[10px] leading-[1.5] tracking-[0.3px] text-white/45">{note}</li>}
           {items.length === 0 && (
             <li className="px-2 text-[11px] leading-[1.6] text-white/45">{data ? "NO VISITS YET. BE THE FIRST ON THE MAP." : "LOADING"}</li>
           )}
