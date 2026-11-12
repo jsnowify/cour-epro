@@ -1,46 +1,44 @@
 /**
- * MLBB ranked season clock. Nothing to update by hand each season: the season number and the next reset window
- * are derived from the current date, starting from one known reset.
+ * MLBB ranked season clock. The season number and the next end are derived from the current date, starting from one
+ * known end. A season ends at 16:00 PHT (08:00 UTC) on its end date, the moment the game's day counter hits 0.
  *
- * ASSUMPTION to verify: seasons run SEASON_MONTHS calendar months, resetting on the same day of the month.
- * If Moonton changes the cadence, edit the three constants below (and nothing else).
+ * Season 42 ("Starward Decade") ran Sep 16 – Dec 16, 2026 (3 months). If Moonton changes the cadence, edit the
+ * constants below (and nothing else).
  */
-export const ANCHOR_SEASON = 42; // the season that ends at the anchor reset
-export const ANCHOR_RESET = { year: 2026, month: 12, day: 15 }; // reset window starts Dec 15 (month is 1-12)
-export const RESET_DAYS = 2; // window is Dec 15–16
-export const SEASON_MONTHS = 2;
+export const ANCHOR_SEASON = 42; // the season that ends at the anchor date
+export const ANCHOR_END = { year: 2026, month: 12, day: 16 }; // end date (month is 1-12), at 16:00 PHT
+export const SEASON_MONTHS = 3;
+const END_HOUR_UTC = 8; // 16:00 PHT
 
 const DAY = 86_400_000;
 const MONTHS = ["JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"];
 
-/** Start (UTC ms) of the reset window that ends season `n`. */
+/** End (UTC ms) of season `n`; season n+1 starts at the same instant. */
 function resetStart(n: number) {
-  const { year, month, day } = ANCHOR_RESET;
-  return Date.UTC(year, month - 1 + (n - ANCHOR_SEASON) * SEASON_MONTHS, day);
+  const { year, month, day } = ANCHOR_END;
+  return Date.UTC(year, month - 1 + (n - ANCHOR_SEASON) * SEASON_MONTHS, day, END_HOUR_UTC);
 }
 
 /** The season running at `now` (a new season begins once the reset window of the previous one is over). */
 export function seasonAt(now: Date): number {
   const t = now.getTime();
   let n = ANCHOR_SEASON;
-  while (t >= resetStart(n) + RESET_DAYS * DAY) n++;
-  while (t < resetStart(n - 1) + RESET_DAYS * DAY) n--;
+  while (t >= resetStart(n)) n++;
+  while (t < resetStart(n - 1)) n--;
   return n;
 }
 
-/** Reset window that ends season `n`, e.g. "DEC 15–16" or "DEC 31–JAN 1". */
+/** End date of season `n`, e.g. "DEC 16". */
 export function resetLabel(n: number): string {
   const a = new Date(resetStart(n));
-  const b = new Date(resetStart(n) + (RESET_DAYS - 1) * DAY);
-  const from = `${MONTHS[a.getUTCMonth()]} ${a.getUTCDate()}`;
-  return a.getUTCMonth() === b.getUTCMonth() ? `${from}–${b.getUTCDate()}` : `${from}–${MONTHS[b.getUTCMonth()]} ${b.getUTCDate()}`;
+  return `${MONTHS[a.getUTCMonth()]} ${a.getUTCDate()}`;
 }
 
 /** Where `now` sits in the current season: days until the reset window opens, whether it is open, and the season progress 0–1. */
 export function seasonClock(now: Date) {
   const t = now.getTime();
   const n = seasonAt(now);
-  const start = resetStart(n - 1) + RESET_DAYS * DAY;
+  const start = resetStart(n - 1);
   const end = resetStart(n);
   const live = t >= end;
   return {
