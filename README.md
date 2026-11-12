@@ -1,37 +1,35 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# COUR E-PRO
 
-## Getting Started
+The official website of **COUR E-PRO** (formerly Aeronova Esport), a Philippines-based **Mobile Legends: Bang Bang** esports team founded in January 2026. The team plays on the **PH server** only, and this site is where players find out who we are and how to try out.
 
-First, run the development server:
+**Live site:** https://cour-epro.vercel.app/
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## What's on the site
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+| Page | What it shows |
+| --- | --- |
+| **Home** | Team overview, the tryout bulletin, a live season clock and a live visitor map. |
+| **Tryouts** | The full tryout process, open lanes (Gold, EXP, Mid, Jungle, Roam) and an FAQ. Applications go through Discord. |
+| **Teams** | COUR UNO (active) and COUR DOS (forming), with roster and status. |
+| **Players** | The COUR UNO players by IGN and lane. |
+| **Tournaments** | Current event status. Dates, format and registration are announced on Discord. |
+| **News** | Announcements and guides, plus a "Get pinged" call to action for Discord. |
+| **About** | The team, its motto and its founder, Snowi. |
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+## Highlights
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- **Season clock.** A live countdown to the end of the current MLBB ranked season. It mirrors the in-game day counter, which drops once a day at 4 PM PHT. The time comes from the server rather than the visitor's device, so a wrong clock can't show a wrong day. Season 42 ends Dec 16, 2026 at 4 PM PHT.
+- **Live visitor map.** Aggregate visits by city, counted once per visitor per day. The IP address is never stored, coordinates are rounded to about 11 km, and no personal data is published.
+- **Motion-first design.** Smooth scrolling, scramble-text page and link transitions, a preloader and pixel-style imagery, all in a crimson and black look.
+- **Press kit.** Team logos in a view-only dialog.
+- **SEO and sharing.** Open Graph and Twitter preview image, structured data, sitemap and an `llms.txt` for AI assistants.
 
-## Learn More
+## Built with
 
-To learn more about Next.js, take a look at the following resources:
+Next.js (App Router), React, TypeScript, Tailwind CSS, Lenis for smooth scrolling, and libSQL / MongoDB for visit counts. Deployed on Vercel.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Join us
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Tryouts are open for all five lanes. Join the Discord, send your IGN and main role: https://discord.gg/Et66QZf4vu
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
-# cour-epro
+Designed and built by [Snowi](https://snowi-cambronero.vercel.app/).
