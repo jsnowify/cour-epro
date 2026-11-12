@@ -54,10 +54,9 @@ export function seasonClock(now: Date) {
 /** The game's day counter drops once a day at 16:00 PHT (UTC+8, no daylight saving) = 08:00 UTC. */
 const DROP_UTC_MS = 8 * 3_600_000;
 
-/** Days left as the game shows them: whole calendar days to the reset day, flipping at 16:00 PHT. 0 = reset day. */
-export function gameDaysLeft(nowMs: number, resetStartMs: number): number {
-  const today = Math.floor((nowMs - DROP_UTC_MS) / DAY);
-  return Math.max(0, Math.floor(resetStartMs / DAY) - today);
+/** Days left as the game shows them: whole days until the season ends (16:00 PHT), so it drops daily at 16:00 PHT. */
+export function gameDaysLeft(nowMs: number, endMs: number): number {
+  return Math.max(0, Math.floor((endMs - nowMs) / DAY));
 }
 
 /** Milliseconds until the next 16:00 PHT, when the day counter drops by one. */
